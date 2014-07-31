@@ -1,0 +1,19 @@
+\select@language {british}
+\select@language {french}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Diff\IeC {\'e}rence de Gausienne \cite {low04}\relax }}{9}{figure.caption.6}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces \cite {low04} Le maxima et le minima des images de diff\IeC {\'e}rence de gaussienne sont d\IeC {\'e}tect\IeC {\'e}s en comparant une pixel (marqu\IeC {\'e} X) \IeC {\`a} ses 26 voisins dans les r\IeC {\'e}gions de 3x3 aux \IeC {\'e}chelles actuels et adjacents (marqu\IeC {\'e} avec des cercles).\relax }}{10}{figure.caption.7}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Illustration de la construction de l'histogramme des orientations\relax }}{11}{figure.caption.8}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Construction d'un descripteur SIFT\relax }}{12}{figure.caption.9}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Model de BOW\relax }}{13}{figure.caption.10}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Classification lin\IeC {\'e}aire\relax }}{15}{figure.caption.11}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces L'hyperplan optimal\relax }}{15}{figure.caption.12}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Probl\IeC {\`e}me de multi-classes\relax }}{22}{figure.caption.13}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Probl\IeC {\`e}me de multi-classes\relax }}{22}{figure.caption.14}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Comparaison de la vitesse entre LIBSVM et SGD binaire\relax }}{26}{figure.caption.16}
+\addvspace {10\p@ }
+\select@language {british}
