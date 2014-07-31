@@ -1,0 +1,35 @@
+\select@language {british}
+\select@language {french}
+\contentsline {chapter}{\numberline {1}Introduction g\IeC {\'e}n\IeC {\'e}rale}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}Introduction}{3}{section.1.1}
+\contentsline {section}{\numberline {1.2}Description par chapitre}{3}{section.1.2}
+\contentsline {chapter}{\numberline {2}Extraction des caract\IeC {\'e}ristiques}{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}Introduction}{5}{section.2.1}
+\contentsline {section}{\numberline {2.2}Description locale des images}{6}{section.2.2}
+\contentsline {section}{\numberline {2.3}M\IeC {\'e}thode SIFT (Scale-invariant feature transform)}{7}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Introduction}{7}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}D\IeC {\'e}tection d'extrema dans l'espace des \IeC {\'e}chelles}{8}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Localisation pr\IeC {\'e}cise de points d'int\IeC {\'e}r\IeC {\^e}t}{10}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}Assignation d'orientation}{10}{subsection.2.3.4}
+\contentsline {subsection}{\numberline {2.3.5}Descripteur de point d'int\IeC {\'e}r\IeC {\^e}t}{11}{subsection.2.3.5}
+\contentsline {section}{\numberline {2.4}M\IeC {\'e}thode BoW (Bag of word)}{12}{section.2.4}
+\contentsline {chapter}{\numberline {3}Apprentissage automatique}{14}{chapter.3}
+\contentsline {section}{\numberline {3.1}Introduction}{14}{section.3.1}
+\contentsline {section}{\numberline {3.2}M\IeC {\'e}thode SVM (Support Vector Machine)}{14}{section.3.2}
+\contentsline {section}{\numberline {3.3}M\IeC {\'e}thode SVM avec SGD (Stochastic gradient descent)}{17}{section.3.3}
+\contentsline {section}{\numberline {3.4}M\IeC {\'e}thode MC-SGD (Multi Class - Stochastic gradient descent)}{17}{section.3.4}
+\contentsline {chapter}{\numberline {4}Impl\IeC {\'e}mentation}{19}{chapter.4}
+\contentsline {section}{\numberline {4.1}Introduction}{19}{section.4.1}
+\contentsline {section}{\numberline {4.2}Repr\IeC {\'e}sentation par des descripteurs et m\IeC {\'e}thode sac de mots}{19}{section.4.2}
+\contentsline {section}{\numberline {4.3}Apprentissage automatique}{20}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Descente de gradient stochastique (SGD)}{20}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Descente de gradient stochastique pour multi-classe (MC-SGD)}{21}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}Parall\IeC {\'e}lisation de MC-SGD}{23}{subsection.4.3.3}
+\contentsline {chapter}{\numberline {5}R\IeC {\'e}sultat obtenue}{25}{chapter.5}
+\contentsline {section}{\numberline {5.1}Introduction}{25}{section.5.1}
+\contentsline {section}{\numberline {5.2}M\IeC {\'e}thode SGD-SVM}{25}{section.5.2}
+\contentsline {section}{\numberline {5.3}M\IeC {\'e}thode MC-SGD}{27}{section.5.3}
+\contentsline {section}{\numberline {5.4}Classification d'images avec MC-SGD}{29}{section.5.4}
+\contentsline {chapter}{\numberline {6}Conclusion et perspectives}{31}{chapter.6}
+\contentsline {chapter}{References}{32}{section*.20}
+\select@language {british}
