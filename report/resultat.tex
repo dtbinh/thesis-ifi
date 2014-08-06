@@ -7,7 +7,7 @@ Dans le chapitre précédent, nous avons généralement présenté des méthodes
 \section{Méthode SGD-SVM}
 Pour cette étape, nous voulons comparer SGD-SVM binaire avec LIBSVM pour voir si quelle méthode est plus efficace. Nous utilisons ci-dessous la base de données binaire (2 classes) de LIBSVM \cite{svmdata1}, Adult avec la taille d'exemple d'entrées différente.\\
 
-Dans cette expérimentation, nous avons utilisé la fonction linaire de SVM car elle est plus efficace que les autre fonctions (seulement avec cette base de données). Pour la méthode SGD, nous avons utilisé $T = 10000$ cycles et chaque cycle nous choisissons 10 exemples. Avec cette méthode, le résultat change un peu (moins de 10\%) car elle choisit aléatoire des exemples dans chaque cycle, donc, nous avons testé 10 fois chaque exemple et fait la moyenne pour comparer avec la méthode SVM.
+Dans cette expérimentation, nous avons utilisé la fonction linaire de SVM car elle est plus efficace que les autre fonctions (seulement avec cette base de données). Pour la méthode SGD, nous avons utilisé $T = 10000$ cycles et chaque cycle nous choisissons 10 exemples. Avec cette méthode, le résultat change un peu (moins de 10\%) chaque case de test car elle choisit aléatoire des exemples dans chaque cycle, donc, nous avons testé 10 fois chaque exemple et fait la moyenne pour comparer avec la méthode SVM.
 
 \begin{table}
 \begin{center}
@@ -62,7 +62,7 @@ Avant d'utiliser pour le problème de classification d'images, nous testons cett
     \hline
     Données & LIBSVM(\%) & SGD(\%) & LIBSVM(s) & LIN(s) & PARAL(s) & $\frac{SVM(s)}{PARAL(s)}$ \\ \hline
     
-    Protein & 68.23 & 68.66 & 511 & 7 & 5 & 110.2 \\ \hline
+    Protein & 68.23 & 68.66 & 511 & 0.35 & 0.2 & 2555 \\ \hline
     
     \end{tabular}
 \end{center}
@@ -71,10 +71,9 @@ Avant d'utiliser pour le problème de classification d'images, nous testons cett
 \end{table}
 
 \pagebreak
-En voyant le table \ref{tab:mcsvm}, nous trouvons que la méthode MC-SGD parallèle plus vite que la méthode SVM 110.2 fois. Nous trouvons aussi que la version parallèle n'est pas beaucoup plus vite que sa version linaire. La raison est que le temps d'apprendre d'un classificateur est de 1 ou 2 seconds et cette base de données ne comprend que 3 classes. Donc, La version parallèle économie seulement 2 seconds.\\
+En voyant le table \ref{tab:mcsvm}, nous trouvons que la méthode MC-SGD parallèle plus vite que la méthode SVM 2555 fois. Nous trouvons aussi que la version parallèle n'est pas beaucoup plus vite que sa version linaire. La raison est que le temps d'apprendre d'un classificateur est très petit et cette base de données ne comprend que 3 classes. Donc, La version parallèle économie seulement 0.15 seconds.\\
 
 A fin de vous montrer la vitesse de la version parallèle de MC-SGD, nous avons testé avec la base de données de 10 classes\\
-
 
 \pagebreak
 \begin{table}
@@ -83,7 +82,11 @@ A fin de vous montrer la vitesse de la version parallèle de MC-SGD, nous avons 
     \hline
     Données & LIBSVM(\%) & SGD(\%) & LIBSVM(s) & LIN(s) & PARAL(s) & $\frac{SVM(s)}{PARAL(s)}$ \\ \hline
     
-    mnist & 86.92 & 86.46 & 2814 & 191 & 28 & 100.5 \\ \hline
+    mnist & 86.92 & 86.46 & 2810 & 0.86 & 0.72 & 3902.8 \\ \hline
+    
+    fr & 84.08 & 88.58 & 327 & 3.60 & 1.64 & 199.4 \\ \hline
+    
+    3d & 76.54 & 76.8 & 144 & 1.62 & 0.90 & 160 \\ \hline
     
     \end{tabular}
 \end{center}
@@ -92,9 +95,9 @@ A fin de vous montrer la vitesse de la version parallèle de MC-SGD, nous avons 
 \end{table}
 
 
-En générale, le résultat de classification de MC-SGD ne meilleure pas que SVM. Par contre, le temps d'apprendre est plus vite que SVM environs 100 fois pour le problème de classification de multi-classes.
+En générale, le résultat de classification de MC-SGD ne meilleure pas que SVM. Par contre, le temps d'apprendre est beaucoup plus vite que SVM pour le problème de classification de multi-classes. Le table \ref{tab:pmcsvm} est une preuve.
 
-Cette expérimentation est déroulée dans l'ordinateur de 8 cœurs, la version parallèle plus vite que la version linaire presque 7 fois et le résultat de classification est le même. Donc, dès maintenant, les autres comparaisons entre SVM et MC-SGD seront réalisées avec la version parallèle.
+Cette expérimentation est déroulée dans l'ordinateur de 8 cœurs, la version parallèle n'est pas beaucoup plus vite que la version linaire car j'ai utilisé l'option d'optimiser le temps de toute les deux versions et le résultat de classification est le même. Donc, dès maintenant, les autres comparaisons entre SVM et MC-SGD seront réalisées avec la version parallèle.
 
 
 \section{Classification d'images avec MC-SGD}
@@ -107,7 +110,13 @@ Comme nous avons parlé dans le processus, notre processus pour la classificatio
     \hline
     Données & LIBSVM(\%) & SGD(\%) & LIBSVM(s) & MC-SGD(s) & $\frac{SVM(s)}{MC-SGD(s)}$ \\ \hline
     
-    Scènes 15 catégories & 58.04 & 57.74 & 12 & 2 & 6 \\ \hline
+    Scènes 8 catégories & 58.04 & 57.74 & 15 & 0.18 & 83.3 \\ \hline
+    
+    Caltech 101 & 61.52 & 67.12 & 2873 & 106.95 & 26.9 \\ \hline    
+    
+    Caltech 101 & 61.52 & 57.12 & 2873 & 74 & 38.8 \\ \hline   
+    
+    Caltech 7 3D & 91.52 & 88.3 & 113.4 & 0.81 & 140 \\ \hline    
     
     \end{tabular}
 \end{center}
@@ -115,7 +124,7 @@ Comme nous avons parlé dans le processus, notre processus pour la classificatio
 \label{tab:pmcsvm-8scenes}
 \end{table}
 
-Le tableau \ref{tab:pmcsvm-8scenes} montre que le pourcentage de classification de SVM est presque égale que MC-SGD. Par contre, SVM est plus lent que MC-SGD 6 fois. Cette base d'images n'est pas grande, elle ne contient que 15 catégories. Nous rappelons que LIBSVM utilise one-vs-one et MC-SGD utilise one-vs-all. Donc, si la base d'image augmente plus de catégories, la méthode MC-SGD sera plus vitesse si on compare avec la méthode SVM.
+Le tableau \ref{tab:pmcsvm-8scenes} montre que le pourcentage de classification de SVM est presque égale que MC-SGD. Par contre, SVM est plus lent que MC-SGD environs 20 fois, ça dépend la base de test. Ces bases d'images ne sont pas très grandes, la première ne contient que 8 catégories, la deuxième de 101 classes et la troisième de 7 classes. Nous rappelons que LIBSVM utilise one-vs-one et MC-SGD utilise one-vs-all. Donc, si la base d'image augmente plus de catégories ou classes, la méthode MC-SGD sera plus vitesse si on compare avec la méthode SVM.
 
 %./svm-train -s 0 -c 312 -t 0 -g 0.0005 -e 0.1 data/scenes-8/scenes-libsvm.train 
 %./sgdsvm -iter 1000 -k 10 -lambda 0.6 -paral 1 -testFile data/scenes-8/scenes-libsvm.test data/scenes-8/scenes-libsvm.train 
