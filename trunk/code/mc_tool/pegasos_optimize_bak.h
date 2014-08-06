@@ -28,6 +28,17 @@
 // function from Joachims that measures CPU time
 double get_runtime(void);
 
+WeightVector getWeightVector(// Input variables
+	std::vector<simple_sparse_vector>& Dataset,
+	std::vector<int>& Labels,
+	uint dimension,
+	double lambda,int max_iter,
+	int exam_per_iter,
+	// additional parameters
+	int eta_rule_type , double eta_constant ,
+	int projection_rule, double projection_constant);
+
+
 void LearnReturnLast(// Input variables
 		      std::vector<simple_sparse_vector>& Dataset,
 		      std::vector<int>& Labels,
@@ -45,41 +56,6 @@ void LearnReturnLast(// Input variables
 		      // additional parameters
 		      int eta_rule_type , double eta_constant ,
 		      int projection_rule, double projection_constant);
-
-WeightVector getWeightVector(// Input variables
-    std::vector<simple_sparse_vector>& Dataset,
-	std::vector<int>& Labels,
-	uint dimension,
-	double lambda,int max_iter,
-	int exam_per_iter,
-	// additional parameters
-	int eta_rule_type , double eta_constant ,
-	int projection_rule, double projection_constant);
-
-WeightVector getWeightVectorBlanced(// Input variables
-    std::vector<simple_sparse_vector>& Dataset,
-	std::vector<int>& Labels,
-	const std::vector<int>& pos_index_list,
-	const std::vector<int>& neg_index_list,
-	uint dimension,
-	double lambda,int max_iter,
-	int exam_per_iter,
-	// additional parameters
-	int eta_rule_type , double eta_constant ,
-	int projection_rule, double projection_constant);
-
-
-WeightVector getWeightVectorBlancedNew(// Input variables
-    std::vector<simple_sparse_vector>& Dataset,
-	std::vector<int>& Labels,
-	std::vector<int>& pos_index_list,
-	std::vector<int>& neg_index_list,
-	uint dimension,
-	double lambda,int max_iter,
-	int exam_per_iter,
-	// additional parameters
-	int eta_rule_type , double eta_constant ,
-	int projection_rule, double projection_constant);
 
 
 // function for reading the data
