@@ -10,10 +10,12 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Classification lin\IeC {\'e}aire\relax }}{15}{figure.caption.11}
 \contentsline {figure}{\numberline {3.2}{\ignorespaces L'hyperplan optimal\relax }}{15}{figure.caption.12}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Probl\IeC {\`e}me de multi-classes one-versus-one\relax }}{18}{figure.caption.13}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Probl\IeC {\`e}me de multi-classes one-versus-one d\IeC {\'e}taill\IeC {\'e}\relax }}{18}{figure.caption.14}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Probl\IeC {\`e}me de multi-classes one-versus-all\relax }}{19}{figure.caption.15}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Probl\IeC {\`e}me de multi-classes one-versus-all d\IeC {\'e}taill\IeC {\'e}\relax }}{19}{figure.caption.16}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Probl\IeC {\`e}me de multi-classes\relax }}{22}{figure.caption.13}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Probl\IeC {\`e}me de multi-classes\relax }}{22}{figure.caption.14}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Comparaison de la vitesse entre LIBSVM et SGD binaire\relax }}{26}{figure.caption.16}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Comparaison de la vitesse entre LIBSVM et SGD binaire\relax }}{27}{figure.caption.18}
 \addvspace {10\p@ }
 \select@language {british}

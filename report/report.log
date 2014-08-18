@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.6-1.40.14 (TeX Live 2014/dev) (format=pdflatex 2014.5.23)  7 AUG 2014 09:25
+This is pdfTeX, Version 3.1415926-2.6-1.40.14 (TeX Live 2014/dev) (format=pdflatex 2014.5.23)  14 AUG 2014 15:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -598,6 +598,15 @@ LaTeX Warning: Label `overflow' multiply defined.
 LaTeX Warning: Label `f7' multiply defined.
 
 
+LaTeX Warning: Label `mclass' multiply defined.
+
+
+LaTeX Warning: Label `sub@mclass' multiply defined.
+
+
+LaTeX Warning: Label `mulclass' multiply defined.
+
+
 LaTeX Warning: Label `sss07' multiply defined.
 
 )
@@ -677,7 +686,7 @@ LaTeX Info: Redefining \nameref on input line 56.
 \openout3 = `report.out'.
 
  (./title.tex
-<images/ifi-logo.png, id=132, 183.68625pt x 106.3975pt>
+<images/ifi-logo.png, id=144, 183.68625pt x 106.3975pt>
 File: images/ifi-logo.png Graphic file (type png)
 
 <use images/ifi-logo.png>
@@ -693,20 +702,20 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 10.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-<images/auf-logo.jpg, id=134, 48.18pt x 34.6896pt>
+<images/auf-logo.jpg, id=146, 48.18pt x 34.6896pt>
 File: images/auf-logo.jpg Graphic file (type jpg)
  <use images/auf-logo.jpg>
 Package pdftex.def Info: images/auf-logo.jpg used on input line 12.
 (pdftex.def)             Requested size: 70.19714pt x 50.54211pt.
 
-<images/unh-logo.png, id=135, 133.09724pt x 131.2905pt>
+<images/unh-logo.png, id=147, 133.09724pt x 131.2905pt>
 File: images/unh-logo.png Graphic file (type png)
 
 <use images/unh-logo.png>
 Package pdftex.def Info: images/unh-logo.png used on input line 15.
 (pdftex.def)             Requested size: 70.19714pt x 69.24506pt.
 
-<images/ctu-logo.jpg, id=136, 225.84375pt x 225.84375pt>
+<images/ctu-logo.jpg, id=148, 225.84375pt x 225.84375pt>
 File: images/ctu-logo.jpg Graphic file (type jpg)
 
 <use images/ctu-logo.jpg>
@@ -816,7 +825,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 75--76
 
  []
 
-[8] <images/dog.png, id=326, 755.82375pt x 526.96875pt>
+[8] <images/dog.png, id=345, 755.82375pt x 526.96875pt>
 File: images/dog.png Graphic file (type png)
  <use images/dog.png>
 Package pdftex.def Info: images/dog.png used on input line 82.
@@ -826,7 +835,7 @@ Overfull \hbox (36.79134pt too wide) in paragraph at lines 82--83
  [][] 
  []
 
-<images/select_point.png, id=329, 488.82625pt x 261.97874pt>
+<images/select_point.png, id=348, 488.82625pt x 261.97874pt>
 File: images/select_point.png Graphic file (type png)
 
 <use images/select_point.png>
@@ -838,26 +847,26 @@ Overfull \hbox (33.84932pt too wide) detected at line 116
 
  []
 
-<images/sift_hist.png, id=346, 441.65pt x 99.37125pt>
+<images/sift_hist.png, id=365, 543.02875pt x 177.66376pt>
 File: images/sift_hist.png Graphic file (type png)
 
 <use images/sift_hist.png>
 Package pdftex.def Info: images/sift_hist.png used on input line 122.
-(pdftex.def)             Requested size: 284.52756pt x 64.02193pt.
+(pdftex.def)             Requested size: 284.52756pt x 93.09323pt.
 
-<images/siftdescriptor.png, id=348, 331.2375pt x 178.6675pt>
+<images/siftdescriptor.png, id=367, 568.1225pt x 268.00125pt>
 File: images/siftdescriptor.png Graphic file (type png)
 
 <use images/siftdescriptor.png>
 Package pdftex.def Info: images/siftdescriptor.png used on input line 134.
-(pdftex.def)             Requested size: 284.52756pt x 153.4793pt.
+(pdftex.def)             Requested size: 284.52756pt x 134.2252pt.
  [11 <./images/sift_hist.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 139--140
 
  []
 
 [12 <./images/siftdescriptor.png>]
-<images/bow.png, id=364, 788.9475pt x 556.0775pt>
+<images/bow.png, id=383, 788.9475pt x 556.0775pt>
 File: images/bow.png Graphic file (type png)
  <use images/bow.png>
 Package pdftex.def Info: images/bow.png used on input line 148.
@@ -884,23 +893,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 160--161
 
  []
 
-<images/separating_lines.png, id=371, 72.27pt x 70.8246pt>
+<images/separating_lines.png, id=391, 325.215pt x 276.03125pt>
 File: images/separating_lines.png Graphic file (type png)
 
 <use images/separating_lines.png>
-Package pdftex.def Info: images/separating_lines.png used on input line 165.
-(pdftex.def)             Requested size: 156.49014pt x 153.36893pt.
+Package pdftex.def Info: images/separating_lines.png used on input line 166.
+(pdftex.def)             Requested size: 156.49014pt x 132.82622pt.
  [14
 
 ]
-<images/margin.png, id=379, 803.0pt x 865.2325pt>
+<images/margin.png, id=398, 803.0pt x 865.2325pt>
 File: images/margin.png Graphic file (type png)
  <use images/margin.png>
-Package pdftex.def Info: images/margin.png used on input line 174.
+Package pdftex.def Info: images/margin.png used on input line 175.
 (pdftex.def)             Requested size: 156.49014pt x 168.62064pt.
 
 [15 <./images/separating_lines.png> <./images/margin.png>] [16]
-Underfull \hbox (badness 10000) in paragraph at lines 242--244
+Underfull \hbox (badness 10000) in paragraph at lines 243--245
 
  []
 
@@ -909,77 +918,101 @@ Underfull \hbox (badness 10000) in paragraph at lines 251--252
 
  []
 
-[17]
-Overfull \hbox (4.50139pt too wide) in paragraph at lines 253--254
-[]\OT1/cmr/m/n/12 En pra-tique, one-vs-one et one-vs-all sont beau-coup uti-lis
-^^Ses par leur simple.
+[17] <images/multiclass.png, id=451, 292.09125pt x 185.69376pt>
+File: images/multiclass.png Graphic file (type png)
+
+<use images/multiclass.png>
+Package pdftex.def Info: images/multiclass.png used on input line 260.
+(pdftex.def)             Requested size: 195.0pt x 123.97214pt.
+
+<images/1vs1c.png, id=452, 303.1325pt x 190.7125pt>
+File: images/1vs1c.png Graphic file (type png)
+ <use images/1vs1c.png>
+Package pdftex.def Info: images/1vs1c.png used on input line 267.
+(pdftex.def)             Requested size: 195.0pt x 122.68414pt.
+
+Overfull \hbox (5.22217pt too wide) in paragraph at lines 259--271
+ [][]  [] 
  []
 
+<images/classac.png, id=455, 301.125pt x 191.71625pt>
+File: images/classac.png Graphic file (type png)
+ <use images/classac.png>
+Package pdftex.def Info: images/classac.png used on input line 280.
+(pdftex.def)             Requested size: 117.00119pt x 74.49112pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 253--254
+<images/classab.png, id=456, 299.1175pt x 191.71625pt>
+File: images/classab.png Graphic file (type png)
 
+<use images/classab.png>
+Package pdftex.def Info: images/classab.png used on input line 287.
+(pdftex.def)             Requested size: 117.00119pt x 74.99135pt.
+
+<images/classbc.png, id=457, 296.10625pt x 189.70876pt>
+File: images/classbc.png Graphic file (type png)
+
+<use images/classbc.png>
+Package pdftex.def Info: images/classbc.png used on input line 294.
+(pdftex.def)             Requested size: 117.00119pt x 74.95872pt.
+File: images/multiclass.png Graphic file (type png)
+ <use images/multiclass.png>
+Package pdftex.def Info: images/multiclass.png used on input line 308.
+(pdftex.def)             Requested size: 195.0pt x 123.97214pt.
+
+<images/1vsall.png, id=458, 284.06125pt x 177.66376pt>
+File: images/1vsall.png Graphic file (type png)
+ <use images/1vsall.png>
+Package pdftex.def Info: images/1vsall.png used on input line 315.
+(pdftex.def)             Requested size: 195.0pt x 121.9646pt.
+
+Overfull \hbox (5.22217pt too wide) in paragraph at lines 307--319
+ [][]  [] 
  []
 
-) (./implementation.tex [18]
+[18 <./images/multiclass.png> <./images/1vs1c.png> <./images/classac.png> <./im
+ages/classab.png> <./images/classbc.png>]
+<images/classa.png, id=470, 284.06125pt x 174.6525pt>
+File: images/classa.png Graphic file (type png)
+ <use images/classa.png>
+Package pdftex.def Info: images/classa.png used on input line 328.
+(pdftex.def)             Requested size: 117.00119pt x 71.93843pt.
+
+<images/classb.png, id=471, 283.0575pt x 173.64874pt>
+File: images/classb.png Graphic file (type png)
+ <use images/classb.png>
+Package pdftex.def Info: images/classb.png used on input line 335.
+(pdftex.def)             Requested size: 117.00119pt x 71.77672pt.
+
+<images/classc.png, id=472, 282.05376pt x 174.6525pt>
+File: images/classc.png Graphic file (type png)
+ <use images/classc.png>
+Package pdftex.def Info: images/classc.png used on input line 342.
+(pdftex.def)             Requested size: 117.00119pt x 72.45012pt.
+)
+(./implementation.tex [19 <./images/1vsall.png> <./images/classa.png> <./images
+/classb.png> <./images/classc.png>]
 Chapitre 4.
 
 Overfull \hbox (52.42183pt too wide) in paragraph at lines 7--7
 []\OT1/cmr/bx/n/17.28 Repr^^Sesentation par des des-crip-teurs et m^^Sethode
  []
 
-[19
+[20
 
 ]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 24.
- [20]
+ [21]
 Underfull \hbox (badness 10000) in paragraph at lines 55--56
 
  []
 
-[21] <images/multiclass.png, id=464, 292.09125pt x 185.69376pt>
-File: images/multiclass.png Graphic file (type png)
-
-<use images/multiclass.png>
-Package pdftex.def Info: images/multiclass.png used on input line 63.
-(pdftex.def)             Requested size: 195.0pt x 123.97214pt.
-
-<images/mlclass.png, id=465, 284.06125pt x 177.66376pt>
-File: images/mlclass.png Graphic file (type png)
-
-<use images/mlclass.png>
-Package pdftex.def Info: images/mlclass.png used on input line 70.
-(pdftex.def)             Requested size: 195.0pt x 121.9646pt.
-
-Overfull \hbox (5.22217pt too wide) in paragraph at lines 62--74
- [][]  [] 
- []
-
-<images/classa.png, id=468, 284.06125pt x 174.6525pt>
-File: images/classa.png Graphic file (type png)
- <use images/classa.png>
-Package pdftex.def Info: images/classa.png used on input line 83.
-(pdftex.def)             Requested size: 117.00119pt x 71.93843pt.
-
-<images/classb.png, id=469, 283.0575pt x 173.64874pt>
-File: images/classb.png Graphic file (type png)
- <use images/classb.png>
-Package pdftex.def Info: images/classb.png used on input line 90.
-(pdftex.def)             Requested size: 117.00119pt x 71.77672pt.
-
-<images/classc.png, id=470, 282.05376pt x 174.6525pt>
-File: images/classc.png Graphic file (type png)
- <use images/classc.png>
-Package pdftex.def Info: images/classc.png used on input line 97.
-(pdftex.def)             Requested size: 117.00119pt x 72.45012pt.
-
-[22 <./images/multiclass.png> <./images/mlclass.png> <./images/classa.png> <./i
-mages/classb.png> <./images/classc.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 140--141
+[22] [23]
+Underfull \hbox (badness 10000) in paragraph at lines 135--136
 
  []
 
-[23]) (./resultat.tex [24]
+[24]) (./resultat.tex [25]
 Chapitre 5.
 
 Underfull \hbox (badness 10000) in paragraph at lines 8--9
@@ -991,20 +1024,20 @@ Overfull \hbox (32.26678pt too wide) in paragraph at lines 14--37
  [] 
  []
 
-<images/res.png, id=495, 455.45157pt x 255.95625pt>
+<images/res.png, id=530, 455.45157pt x 255.95625pt>
 File: images/res.png Graphic file (type png)
  <use images/res.png>
 Package pdftex.def Info: images/res.png used on input line 44.
 (pdftex.def)             Requested size: 341.43306pt x 191.88469pt.
 
-[25
+[26
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 50--51
 
  []
 
-[26 <./images/res.png (PNG copy)>] [27]
+[27 <./images/res.png (PNG copy)>]
 Overfull \hbox (38.3781pt too wide) in paragraph at lines 61--68
  [] 
  []
@@ -1019,26 +1052,26 @@ Underfull \hbox (badness 10000) in paragraph at lines 76--77
 
  []
 
+
+Overfull \hbox (38.3781pt too wide) in paragraph at lines 80--91
+ [] 
+ []
+
 [28]
-Overfull \hbox (38.3781pt too wide) in paragraph at lines 81--92
+Overfull \hbox (20.6626pt too wide) in paragraph at lines 108--121
  [] 
  []
 
-[29]
-Overfull \hbox (64.06038pt too wide) in paragraph at lines 109--122
- [] 
- []
-
-) (./conclusion.tex [30]
+) (./conclusion.tex [29]
 Chapitre 6.
-) (./ref.tex
-Underfull \hbox (badness 10000) in paragraph at lines 4--1
+
+Underfull \hbox (badness 10000) in paragraph at lines 4--5
 
  []
 
-[31
+) (./ref.tex [30
 
-] [32
+] [31
 
 
 pdfTeX warning (ext4): destination with the same identifier (name{cite.sss07}) 
@@ -1048,15 +1081,15 @@ has been already used, duplicate ignored
                                                   \fi \fi 
 l.30 \bibitem{low99}
                      David G. Lowe, \emph{Object Recognition from Local Scal...
-] [33])
+] [32])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 83.
- [34]
+ [33]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 83.
  (./report.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 83.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 83.
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 796944C501EFE369F2BADE02D319DB31;2453.
+(rerunfilecheck)             Checksum: C2649CBED4029702FC0EF1B0ED2B010A;2660.
 
 
 LaTeX Warning: There were multiply-defined labels.
@@ -1064,13 +1097,13 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 83.
  ) 
 Here is how much of TeX's memory you used:
- 9271 strings out of 495005
- 134966 string characters out of 6180408
- 223170 words of memory out of 5000000
- 12168 multiletter control sequences out of 15000+600000
+ 9314 strings out of 495005
+ 135666 string characters out of 6180408
+ 226793 words of memory out of 5000000
+ 12202 multiletter control sequences out of 15000+600000
  13936 words of font info for 53 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 36i,15n,43p,1197b,756s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,15n,43p,1384b,762s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/t
@@ -1088,10 +1121,10 @@ are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/tex
 live/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/t
 exmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on report.pdf (39 pages, 1106474 bytes).
+Output written on report.pdf (38 pages, 1132149 bytes).
 PDF statistics:
- 650 PDF objects out of 1000 (max. 8388607)
- 553 compressed objects within 6 object streams
- 144 named destinations out of 1000 (max. 500000)
- 342 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 679 PDF objects out of 1000 (max. 8388607)
+ 575 compressed objects within 6 object streams
+ 149 named destinations out of 1000 (max. 500000)
+ 386 words of extra memory for PDF output out of 10000 (max. 10000000)
 
