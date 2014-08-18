@@ -55,8 +55,8 @@ Les données que nous avons utilisé ont 123 caractéristiques. Nous trouvons qu
 \section{Méthode MC-SGD}
 Avant d'utiliser pour le problème de classification d'images, nous testons cette méthode avec les données multi-classes de LIBSVM \cite{svmdatamul}. Tout d'abord, on teste avec la base de données \textit{Protein} de 3 classes
 
-\pagebreak
-\begin{table}
+
+\begin{table}[h]
 \begin{center}
     \begin{tabular}{ | c | c | c | c | c | c | c |}
     \hline
@@ -70,13 +70,12 @@ Avant d'utiliser pour le problème de classification d'images, nous testons cett
 \label{tab:mcsvm}
 \end{table}
 
-\pagebreak
+
 En voyant le table \ref{tab:mcsvm}, nous trouvons que la méthode MC-SGD parallèle plus vite que la méthode SVM 2555 fois. Nous trouvons aussi que la version parallèle n'est pas beaucoup plus vite que sa version linaire. La raison est que le temps d'apprendre d'un classificateur est très petit et cette base de données ne comprend que 3 classes. Donc, La version parallèle économie seulement 0.15 seconds.\\
 
 A fin de vous montrer la vitesse de la version parallèle de MC-SGD, nous avons testé avec la base de données de 10 classes\\
 
-\pagebreak
-\begin{table}
+\begin{table}[h]
 \begin{center}
     \begin{tabular}{ | c | c | c | c | c | c | c |}
     \hline
@@ -103,12 +102,12 @@ Cette expérimentation est déroulée dans l'ordinateur de 8 cœurs, la version 
 \section{Classification d'images avec MC-SGD}
 Comme nous avons parlé dans le processus, notre processus pour la classification d'images comprend 3 étapes principales : extraction des descripteurs avec le descripteur SIFT, construit la dictionnaire avec la méthode K-MOYENNE et l'apprentissage automatique pour la classification avec la méthode MC-SGD. Dans la partie précédente nous avons présenté le résultat de la méthode MC-SGD(l'étape 3, l'étape d'apprentissage automatique) avec la base de données existantes. Maintenant nous appliquons la méthode Sac de Mots pour préparer les entrées pour la méthode MC-SGD avec les bases d'images de classification pour voir si la méthode MC-SGD s'adapte pour le problème de classification d'images.
 
-\pagebreak
-\begin{table}
+
+\begin{table}[h]
 \begin{center}
     \begin{tabular}{ | c | c | c | c | c | c |}
     \hline
-    Données & LIBSVM(\%) & SGD(\%) & LIBSVM(s) & MC-SGD(s) & $\frac{SVM(s)}{MC-SGD(s)}$ \\ \hline
+    Données & LIBSVM(\%) & SGD(\%) & LIBSVM(s) & SGD(s) & $\frac{SVM(s)}{SGD(s)}$ \\ \hline
     
     Scènes 8 catégories & 58.04 & 57.74 & 15 & 0.18 & 83.3 \\ \hline
     

@@ -157,9 +157,10 @@ La représentation par sac de mots \textit{(ou bag of words en anglais)} est une
 L'apprentissage automatique (machine learning) est un domaine de l'intelligence artificielle, qui permet aux machines d'apprendre à partir des données. L'apprentissage automatique est la discipline scientifique concernée par le développement, l'analyse et l'implémentation de méthodes automatisables qui permettent à une machine d'évoluer autonome-ment grâce à un processus d'apprentissage, et ainsi de remplir des tâches qu'il est difficile ou impossible de remplir par des moyens algorithmiques plus classiques. Le problème ici est que la donnée d'observation est petite, elle ne peut pas comprendre tout l'ensemble de données d'entrées (tous les cas) qui est trop grande. Un programme d'apprentissage automatique doit généraliser des données limite afin de données des réactions intelligentes sur des nouveaux exemples.\\
 
 \section{Méthode SVM (Support Vector Machine)}
-Les machines à vecteurs de support (Support Vector Machine, SVM) sont un ensemble de techniques d'apprentissage supervisé destinées à résoudre des problèmes de classification et de régression. Dans cette section, nous ne parlons que SVM pour la classification concernant notre projet dans la pratique(classification).\\
+Les machines à vecteurs de support (Support Vector Machine, SVM) sont un ensemble de techniques d'apprentissage supervisé destinées à résoudre des problèmes de classification et de régression. Dans cette section, nous ne parlons que SVM pour la classification concernant notre projet dans la pratique.\\
 
-La méthode SVM cherche l'hyperplan optimal qui permet de séparer les points (les données) en deux parties en respectant le principe où les points d'une même classe doit être dans la même partie (classification de 2 classes). Pour les problèmes de classification multi-classes, on a des méthodes pour qu'il devient la problème de 2 classes que nous parlerons dans la partie MC-SGD.
+Supposons que l'on a le problème de classification. Le cas simple est le cas d'une fonction de classification linéaire comme dans l'image \ref{slines}. On a $m$ exemples d'entrées $x_1, x_2, ..., x_m$ dans l'espace de $N$ dimensions. Chaque exemple $x_i$ a un label $y_i$ : $y_1, y_2, ..., y_m$ $(y_i \in \{-1,1\})$. Plusieurs hyperplans peuvent séparer ces 2 classes, quel est l'hyperplan optimal ?
+
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=55mm]{images/separating_lines}
@@ -167,7 +168,7 @@ La méthode SVM cherche l'hyperplan optimal qui permet de séparer les points (l
 \label{slines}
 \end{figure}
 
-Le cas simple est le cas d'une fonction de classification linéaire comme dans l'image \ref{slines}. On a $m$ exemples d'entrées $x_1, x_2, ..., x_m$ dans l'espace de $N$ dimensions. Chaque exemple $x_i$ a un label $y_i$ : $y_1, y_2, ..., y_m$ $(y_i \in \{-1,1\})$. Plusieurs hyperplans peuvent séparer ces 2 classes, mais SVM cherche l'hyperplan optimal qui est défini comme l'hyperplan qui maximise la marge entre les échantillons et l'hyperplan séparateur. La marge est la distance entre l'hyperplan et les échantillons les plus proches. Ces derniers sont appelés \textit{vecteurs supports}. Dans l'espace de \textit{N} dimensions, l'hyperplan est défini par le vecteur $w=[w_1,w_2,...,w_n]$ et $b$. SVM cherche l'hyperplan $(w, b)$ pour classifier les données comme l'image \ref{max_margin} :
+SVM cherche l'hyperplan optimal qui est défini comme l'hyperplan qui maximise la marge entre les échantillons et l'hyperplan séparateur. La marge est la distance entre l'hyperplan et les échantillons les plus proches. Ces derniers sont appelés \textit{vecteurs supports}. Dans l'espace de \textit{N} dimensions, l'hyperplan est défini par le vecteur $w=[w_1,w_2,...,w_n]$ et $b$. SVM cherche l'hyperplan $(w, b)$ pour classifier les données comme l'image \ref{max_margin} :
 
 \begin{figure}[ht!]
 \centering
@@ -213,7 +214,7 @@ Nous trouvons que la classification est facile si l'on a trouvé $w$ et $b$. La 
 Le problème d'optimisation quadratique \ref{f5} est un des problèmes d'optimisation qui est normalement recherché dans le domaine de mathématique d'optimisation. Pour l'implémentation ce problème, \cite{jp98} et \cite{cl01} ont la complexité de $O(N^2)$ (N est le nombre d'exemples). Ce sont des programmes les plus utilisés actuel.
 
 \section{Méthode SVM avec SGD (Stochastic gradient descent)}
-SVM standard est efficace mais la complicité est grande $(O(N^2))$, donc, c'est intraitable pour les larges données. La méthode SVM avec SGD (Stochastic Gradient Descent), ou pour plus sample, on appelle la méthode SGD est créées pour résoudre ce problème. SGD ne cherche pas la solution pour résoudre le problème du programme de quadratique. Cette méthode ignore $b$  dans le formule \ref{f5}. Le contraint $y_i.(x_i.w - b) + z_i \geq 1$ peut être remplacé par : 
+SVM standard est efficace mais la complicité est grande $(O(N^2))$, donc, c'est intraitable pour les larges données. La méthode SVM avec SGD (Stochastic Gradient Descent), ou pour plus simple, on appelle la méthode SGD est créées pour résoudre ce problème. SGD ne cherche pas la solution pour résoudre le problème du programme de quadratique \ref{f5}. Cette méthode ignore $b$  dans le formule \ref{f5}. Le contraint $y_i.(x_i.w - b) + z_i \geq 1$ peut être remplacé par : 
 
 \begin{equation}
 z_i \geq 1 - y_i.(x_i.w)
@@ -227,7 +228,7 @@ z_i = max\lbrace0, 1 - y_i.(x_i.w)\rbrace
 \label{f7}
 \end{equation}
 
-Donc, le programme de quadratique \ref{f5} peut remplacer par le formule \ref{f8} :
+Donc, le programme de quadratique \ref{f5} peut remplacer par le formule \ref{f7} :
 
 \begin{equation}
 \mbox{min}\quad \Psi(w, x, y) = \frac{1}{2} ||w||^2 + \frac{1}{m}\sum\limits_{i=1}^m max\lbrace0, 1 - y_i.(x_i.w)\rbrace\quad
@@ -246,10 +247,104 @@ Cette algorithme est linéaire avec le nombre d'exemple. C'est la raison pour la
 
 %Nous avons tester avec les données \textit{gisette} \cite{svmdata1} de 10 classes, 60.000 exemples et de 780 caractéristiques par exemple. 
 
-
 \section{Méthode MC-SGD (Multi Class - Stochastic gradient descent)}
-Plupart d'algorithme de SVM ne traite que le problème de 2 classes (binaire). Il existe plusieurs extensions d'une classification binaire afin de traiter le problème de multi-class classification. Actuellement, on a deux façon pour traiter ce problème. L'une considère directement à résoudre le problème de multi-classes \cite{ww99, yg07}. L'autre divise d'abord le problème en plusieurs problèmes de 2 classes et chaque problème de 2 classes est traité par la classification binaire comme one-versus-one \cite{vv95} et one-versus-all \cite{uk99}. \\
+Plupart d'algorithme de SVM ne traite que le problème de 2 classes (binaire). Il existe plusieurs extensions d'une classification binaire afin de traiter le problème de multi-class classification. Actuellement, on a deux façons pour traiter ce problème. L'une considère directement à résoudre le problème de multi-classes \cite{ww99, yg07}. L'autre divise d'abord le problème en plusieurs problèmes de 2 classes et chaque problème de 2 classes est traité par la classification binaire comme one-versus-one \cite{vv95} et one-versus-all \cite{uk99}. En pratique, one-vs-one et one-vs-all sont beaucoup utilisés par leur simple.\\
 
-En pratique, one-vs-one et one-vs-all sont beaucoup utilisés par leur simple. one-vs-one construit \textit{k(k-1)/2} (k est le nombre de classes) classificateurs, c'est à dire, il utilise tous les paires de classes différents pour l'apprentissage. La prédiction est réalisée par voter et la majorité classificateur va être choisi et la classe correspondant est la classe de prédiction. One-vs-all construit \textit{k} classificateurs, à chaque classificateur \textit{c}, il divise la classes \textit{c} contre tous les restes. La classe de prédiction est la classe ayant la distance la plus courte entre son classificateur et l'exemple d'entrée. \\
+\subsection{One-versus-one}
+One-vs-one construit \textit{k(k-1)/2} (k est le nombre de classes) classificateurs, c'est à dire, il utilise tous les paires de classes différents pour l'apprentissage. La prédiction est réalisée par voter et la majorité classificateur va être choisi et la classe correspondant est la classe de prédiction. 
+
+
+\begin{figure}[htbp!]
+        \centering
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{images/multiclass}
+                \caption{Problème}
+                \label{mclass}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{images/1vs1c}
+                \caption{one-vs-all}
+                \label{1vs1c}
+        \end{subfigure}
+        \caption{Problème de multi-classes one-versus-one}\label{mulclass}
+\end{figure}
+
+
+L'image \ref{1vs1c} est comme un résumé de one-vs-one. Pour plus claire, nous vous listons les trois classificateurs de ces trois classes comme l'image \ref{1vs1detail}
+
+\begin{figure}[htbp!]
+        \centering
+        \begin{subfigure}[b]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{images/classac}
+                \caption{classe A vs classe C}
+                \label{classac}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{images/classab}
+                \caption{classe A vs classe B}
+                \label{classab}
+        \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.30\textwidth}
+                \includegraphics[width=\textwidth]{images/classbc}
+                \caption{classe B vs classe C}
+                \label{classbc}
+        \end{subfigure}
+        \caption{Problème de multi-classes one-versus-one détaillé}\label{1vs1detail}
+\end{figure}
+
+
+\subsection{One-versus-all}
+One-vs-all construit \textit{k} classificateurs, à chaque classificateur \textit{c}, il divise la classes \textit{c} contre tous les restes. La classe de prédiction est la classe ayant la distance la plus courte entre son classificateur et l'exemple d'entrée.
+
+\begin{figure}[H]
+        \centering
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{images/multiclass}
+                \caption{Problème}
+                \label{mclass}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{images/1vsall}
+                \caption{one-vs-all}
+                \label{1vsall}
+        \end{subfigure}
+        \caption{Problème de multi-classes one-versus-all}\label{mulclass}
+\end{figure}
+
+
+L'image \ref{1vsall} est comme un résumé de one-vs-all. Pour plus claire, nous vous listons les trois classificateurs de ces trois classes comme l'image \ref{1vsalldetail}
+
+\begin{figure}[H]
+        \centering
+        \begin{subfigure}[b]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{images/classa}
+                \caption{classe A}
+                \label{classa}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{images/classb}
+                \caption{class B}
+                \label{classb}
+        \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.30\textwidth}
+                \includegraphics[width=\textwidth]{images/classc}
+                \caption{class C}
+                \label{classc}
+        \end{subfigure}
+        \caption{Problème de multi-classes one-versus-all détaillé}\label{1vsalldetail}
+\end{figure}
+
 
 Chaque méthode a l'avantage et l'inconvénient. One-vs-one est balancé mais il construit beaucoup de classificateurs. Par contre, one-vs-all construit moins classificateur mais il n'est pas balancé.

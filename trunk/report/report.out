@@ -16,17 +16,20 @@
 \BOOKMARK [1][-]{section.3.2}{M\351thode SVM \(Support Vector Machine\)}{chapter.3}% 16
 \BOOKMARK [1][-]{section.3.3}{M\351thode SVM avec SGD \(Stochastic gradient descent\)}{chapter.3}% 17
 \BOOKMARK [1][-]{section.3.4}{M\351thode MC-SGD \(Multi Class - Stochastic gradient descent\)}{chapter.3}% 18
-\BOOKMARK [0][-]{chapter.4}{Impl\351mentation}{}% 19
-\BOOKMARK [1][-]{section.4.1}{Introduction}{chapter.4}% 20
-\BOOKMARK [1][-]{section.4.2}{Repr\351sentation par des descripteurs et m\351thode sac de mots}{chapter.4}% 21
-\BOOKMARK [1][-]{section.4.3}{Apprentissage automatique}{chapter.4}% 22
-\BOOKMARK [2][-]{subsection.4.3.1}{Descente de gradient stochastique \(SGD\)}{section.4.3}% 23
-\BOOKMARK [2][-]{subsection.4.3.2}{Descente de gradient stochastique pour multi-classe \(MC-SGD\)}{section.4.3}% 24
-\BOOKMARK [2][-]{subsection.4.3.3}{Parall\351lisation de MC-SGD}{section.4.3}% 25
-\BOOKMARK [0][-]{chapter.5}{R\351sultat obtenue}{}% 26
-\BOOKMARK [1][-]{section.5.1}{Introduction}{chapter.5}% 27
-\BOOKMARK [1][-]{section.5.2}{M\351thode SGD-SVM}{chapter.5}% 28
-\BOOKMARK [1][-]{section.5.3}{M\351thode MC-SGD}{chapter.5}% 29
-\BOOKMARK [1][-]{section.5.4}{Classification d'images avec MC-SGD}{chapter.5}% 30
-\BOOKMARK [0][-]{chapter.6}{Conclusion et perspectives}{}% 31
-\BOOKMARK [0][-]{section*.20}{References}{}% 32
+\BOOKMARK [2][-]{subsection.3.4.1}{One-versus-one}{section.3.4}% 19
+\BOOKMARK [2][-]{subsection.3.4.2}{One-versus-all}{section.3.4}% 20
+\BOOKMARK [0][-]{chapter.4}{Impl\351mentation}{}% 21
+\BOOKMARK [1][-]{section.4.1}{Introduction}{chapter.4}% 22
+\BOOKMARK [1][-]{section.4.2}{Repr\351sentation par des descripteurs et m\351thode sac de mots}{chapter.4}% 23
+\BOOKMARK [1][-]{section.4.3}{Apprentissage automatique}{chapter.4}% 24
+\BOOKMARK [2][-]{subsection.4.3.1}{Descente de gradient stochastique \(SGD\)}{section.4.3}% 25
+\BOOKMARK [2][-]{subsection.4.3.2}{Descente de gradient stochastique pour multi-classe \(MC-SGD\)}{section.4.3}% 26
+\BOOKMARK [2][-]{subsection.4.3.3}{Balance de MC-SGD}{section.4.3}% 27
+\BOOKMARK [2][-]{subsection.4.3.4}{Parall\351lisation de MC-SGD}{section.4.3}% 28
+\BOOKMARK [0][-]{chapter.5}{R\351sultat obtenue}{}% 29
+\BOOKMARK [1][-]{section.5.1}{Introduction}{chapter.5}% 30
+\BOOKMARK [1][-]{section.5.2}{M\351thode SGD-SVM}{chapter.5}% 31
+\BOOKMARK [1][-]{section.5.3}{M\351thode MC-SGD}{chapter.5}% 32
+\BOOKMARK [1][-]{section.5.4}{Classification d'images avec MC-SGD}{chapter.5}% 33
+\BOOKMARK [0][-]{chapter.6}{Conclusion et perspectives}{}% 34
+\BOOKMARK [0][-]{section*.22}{References}{}% 35
