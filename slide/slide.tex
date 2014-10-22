@@ -20,13 +20,17 @@
 \usepackage[utf8]{inputenc}
 \usepackage[noend]{algpseudocode}
 \usepackage[T1]{fontenc}
+%\usepackage{algorithmic}
 \usepackage{algorithmicx}
 \usepackage{amsmath}
 \usepackage{mathtools}
 \usepackage[french,british]{babel}
 \usepackage{algorithm}
+\usepackage{caption}
+\usepackage{subcaption}
 
-\usepackage[font=scriptsize,skip=5pt]{caption}
+
+\usepackage[font=scriptsize,skip=3pt]{caption}
 %\setlength{\textfloatsep}{1.0pt plus 1.0pt minus 2.0pt}
 
 \setbeamertemplate{footline}[frame number]
@@ -131,21 +135,10 @@ Superviseurs : DO Thanh Nghi(CTU), PHAM Nguyen Khang(CTU) et HO Tuong Vinh(IFI)
 \end{frame}
 
 
-\section{Introduction générale}
-%=====================================================Slide 4
-\begin{frame}{Introduction générale}
-\begin{itemize}
-\item La classification d'images est importante : la reconnaissance des scènes, la reconnaissance des chiffres sur des chèques, la reconnaissance des codes postaux pour la classification automatique des courriers, la reconnaissance des visages pour l'authentification, etc.
-
-\item Pas encore une méthode optimale
-
-\item SVM (Support vector machine) est la plus populaire dans le domaine de classification, régression.
-
-\end{itemize}
-\end{frame}
-
+\section{Introduction}
+\subsection{Motivation}
 %=====================================================Slide 6
-\begin{frame}{Introduction - classification d'images}
+\begin{frame}{Classification d'images}
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=105mm]{images/classification}
@@ -155,613 +148,421 @@ Superviseurs : DO Thanh Nghi(CTU), PHAM Nguyen Khang(CTU) et HO Tuong Vinh(IFI)
 \end{figure}
 \end{frame}
 
-%=====================================================Slide 5
-\begin{frame}{Introduction - méthode SVM}
-
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=25mm]{images/svm}
-\caption{Méthode SVM pour la classification}
-\vspace{-2.0em}
-\label{fig:svm}
-\end{figure}
-
+%=====================================================Slide 4
+\begin{frame}{Application de la classification d'images}
+La classification d'images est appliquée dans plusieurs domaines importants :
 \begin{itemize}
-\item Une méthode de classification du domaine d'apprentissage automatique
-\item Classer des données en classes différentes. L'image \ref{fig:svm} est la classification binaire 
-\item Comment l'appliquer pour la classification d'images ?
+\pause
+\item Reconnaissance des chiffres sur des chèques
+\pause
+\item Reconnaissance des codes postaux pour la classification automatique des courriers
+\pause
+\item Reconnaissance des visages pour l'authentification
 \end{itemize}
 \end{frame}
 
 %=====================================================Slide 6
-\begin{frame}{Introduction - processus de SVM pour classification d'images}
-\begin{enumerate}
-\item Extraction des caractéristiques des images : obtenir des vecteurs de caractéristiques (SIFT)
-\item Construire un dictionnaire, calculer le fréquence de chaque mot apparait dans chaque image (histogramme) pour préparer des entrées pour la méthode SVM : obtenir des histogrammes de chaque image (BOW)
-\item Application SVM pour l'apprentissage automatique sur des histogrammes pour la classification
-\end{enumerate}
-\end{frame}
-
-
-%=====================================================Slide 6
-\begin{frame}{Introduction - processus de SVM pour classification d'images}
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=105mm]{images/svm-processus}
-\caption{Processus de SVM pour la classification d'image}
-\vspace{-2.0em}
-\label{overflow}
-\end{figure}
-\end{frame}
-
-%=====================================================Slide 6
-\begin{frame}{Introduction - méthode SGD}
+\begin{frame}{Difficulté de la classification d'images}
+Les données sorties des images sont complexes :
 \begin{itemize}
-\item SVM est satisfait pour la classification d'image, mais cette méthode est lent. SGD est une version simple de SVM
+\pause
+\item Les dimension sont grandes
+\pause
+\item Beaucoup de classes
+\end{itemize}
+\pause
+Solution\\
+$\rightarrow$ Il faut améliorer la vitesse
+\end{frame}
 
-$\rightarrow$ SGD est une bonne choix pour améliorer la vitesse
-\item Même processus avec SVM pour la classification d'image. SGD remplace SVM dans l'étape 3, l'étape apprentissage automatique.
-\item Nous développons et parallélisons un algorithme de classification SGD multi-classes et cette méthode est bien adapté à la classification d'image de grand taille
+\subsection{Contribution}
+%=====================================================Slide 6
+\begin{frame}{Contribution}
+Pendant ce stage, nous avons proposé :
+\begin{itemize}
+\pause
+\item Un algorithme SGD-SVM multi-classes
+\pause
+\item Une version parallèle de cet algorithme
+\pause
+\item Implémentation de MC-SGD-Toy pour étudier l'algorithme MC-SGD
+\end{itemize}
+\pause
+Résultats expérimentaux :
+\begin{itemize}
+\item Égale au SVM pour la classification multi-classes
+\item Plus vite que le SVM de 26 fois à 3902 fois
 \end{itemize}
 \end{frame}
 
 
 \section{État de l'art}
-\subsection{Extraction des caractéristiques}
-%=====================================================Slide 8
-\begin{frame}{Introduction pour extraction des caractéristiques}
-\begin{itemize}
-\item Point d'intérêt : les points fixés quand l'image est changé de scale, la taille, la rotation.
-\item Extraction des caractéristiques (visual features extraction) : après la détection de points d'intérêt, calculer le vecteur caractéristique sur chaque zone autour des points détectés.
-\item Le vecteur caractéristique contient : l'orientation de l'arête ou la magnitude du gradient au point d'intérêt.
-\item Les méthodes comme SIFT comprend l'étape détection des points d'intérêt et aussi l'extraction de caractéristiques
-\end{itemize}
-\end{frame}
-
-\subsubsection*{SIFT}
-%=====================================================Slide 9
-\begin{frame}{Méthode SIFT}
-Méthode SIFT peut être résumé en 4 étapes principales :
+\subsection{Processus de la classification d'images}
+%=====================================================Slide 6
+\begin{frame}{Processus de la classification d'images}
 \begin{enumerate}
-\item Détection des points d'intérêts
-\item Localisation précise de points d'intérêt
-\item Assignation d'orientation
-\item Descripteur de point d'intérêt
-\end{enumerate}
-
-\begin{figure}[!htb]
-\centering
-\minipage{0.30\textwidth}
-\includegraphics[width=\linewidth]{images/kv}
-\caption{Image originale}
-\endminipage\hfill
-\minipage{0.30\textwidth}
-\includegraphics[width=\linewidth]{images/kv-key}
-\caption{Détection de points d'intérêt}
-\endminipage\hfill
-\end{figure}
-
-\end{frame}
-
-%=====================================================Slide 10
-\begin{frame}{Méthode SIFT - Extraction des caractéristiques}
-
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=65mm]{images/sift_hist}
-\caption{Assignation d'orientation}
-\label{max_margin}
-\end{figure}
-
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=55mm]{images/siftdescriptor}
-\caption{Descripteur de caractéristiques}
-\label{max_margin}
-\end{figure}
-
-\end{frame}
-
-%=====================================================Slide 11
-\subsubsection*{Sac de mots visuels}
-\begin{frame}{Methode Sac de mots visuels}
-Cette méthode peut diviser en 5 étapes :
-\begin{enumerate}
-\item Détection des points d'intérêts
-\item Extraction des caractéristiques
-\item Clustering des caractéristiques
-\item Construire un dictionnaire a partir des clusters
-\item Représenter des images par des histogrammes
+\pause
+\item Extraction des caractéristiques des images : obtenir des vecteurs de caractéristiques (SIFT)
+\pause
+\item Construire un dictionnaire et calculer le fréquence de chaque mot apparaît dans chaque image : obtenir des histogrammes de chaque image (BOW)
+\pause
+\item Application SVM pour l'apprentissage automatique sur des histogrammes
 \end{enumerate}
 \end{frame}
 
-%=====================================================Slide 12
-\begin{frame}{Methode Sac de mots visuels - résume}
 
+%=====================================================Slide 6
+\begin{frame}{Processus de la classification d'images (2)}
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=85mm]{images/bow}
-\caption{Descripteur de caractéristiques}
-\label{max_margin}
+\includegraphics[width=105mm]{images/svm-processus}
+\caption{Processus de la classification d'image}
+\vspace{-2.0em}
+\label{fig:processussvm}
 \end{figure}
-
 \end{frame}
 
 \subsection{Apprentissage automatique}
-%=====================================================Slide 13
-\begin{frame}{Introduction pour apprentissage automatique}
-\begin{itemize}
-\item Permet aux machines d'apprendre à partir des données
-\item Remplir des tâches qu'il est difficile ou impossible de remplir par des moyens algorithmiques plus classiques
-\item Généraliser des données limite afin de données des réactions intelligentes sur des nouveaux exemples
-\item SVM est populaire dans le domaine de classification.
-\end{itemize}
-\end{frame}
-
 \subsubsection*{SVM}
 %=====================================================Slide 14
 \begin{frame}{Méthode SVM}
 \begin{itemize}
-\item Méthode d'apprentissage supervisé important
-\item $m$ exemples d'entrées $x_1, x_2, ..., x_m$, de $N$ dimensions
-\item Label $y_i$ : $y_1, y_2, ..., y_m$ $(y_i \in \{-1,1\})$
-\item Cherche l'hyperplan optimal, séparer les points (les données) en deux parties
+\item Méthode d'apprentissage supervisé importante
+\item Cherche l'hyperplan optimal séparant les données en deux classes
 \end{itemize}
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=35mm]{images/separating_lines}
+\includegraphics[width=60mm]{images/svm1}
 \caption{Classification linéaire}
-\label{slines}
+\label{fig:svm1}
 \end{figure}
-
 \end{frame}
 
 %=====================================================Slide 15
-\begin{frame}{Méthode SVM - séparateur}
-\begin{itemize}
-\item L'hyperplan $w=[w_1,w_2,...,w_n]$ et $b$ : $x^T.w - b = 0$
-\item L'hyperplan optimal : maximiser le margin
-\item 2 supports hyperplans $x^T.w - b = 1$ et $x^T.w - b = -1$
-\end{itemize}
-
+\begin{frame}{Méthode SVM - support hyperplan}
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=35mm]{images/margin}
-\caption{L'hyperplan optimal}
-\label{max_margin}
+\includegraphics[width=60mm]{images/svm2}
+\caption{Support hyperplan}
+\label{fig:svm2}
 \end{figure}
-
 \end{frame}
 
-%=====================================================Slide 16
-\begin{frame}{Méthode SVM - classification}
-Par rapport à 2 supports hyperplans parallèles (voir l'image \ref{max_margin}), la classification est réalisée grâce aux \ref{f1} et \ref{f2}.
-\begin{equation}
-x_i.w - b \geq +1, \Rightarrow y_i = 1
-\label{f1}
-\end{equation}
-
-\begin{equation}
-x_i.w - b \leq -1, \Rightarrow y_i = -1
-\label{f2}
-\end{equation}
-
-Comment trouver $w$ et $b$ ?
-
+%=====================================================Slide 15
+\begin{frame}{Méthode SVM - hyperplan optimal}
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=60mm]{images/svm3}
+\caption{L'hyperplan optimal}
+\label{fig:svm3}
+\end{figure}
 \end{frame}
 
-%=====================================================Slide 17
-\begin{frame}{Méthode SVM - programme de quadratique}
-
-Chercher la solution du programme de quadratique \ref{f5} pour obtenir $w$ et $b$
-
-\begin{equation}
-\begin{split}
-\mbox{min}\quad \Psi(w, b, z) = \frac{1}{2} ||w||^2 + c.\sum\limits_{i=1}^m z_i\quad \\ \mbox{s.t} \quad y_i.(x_i.w - b) + z_i \geq 1 \\ \mbox{et} \quad z_i \geq 0
-\end{split}
-\label{f5}
-\end{equation}
-
-\end{frame}
-
-
-
-
-
+%=====================================================Slide 15
+\begin{frame}{Méthode SVM - problème}
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=60mm]{images/svm4}
+\caption{Erreurs de SVM}
+\label{fig:svm4}
+\end{figure}
+\begin{itemize}
+\item SVM obtient $w$ et $b$ après avoir trouvé la solution du programme quadratique $f(w, b, z)$ (détaille dans le rapport)
+\end{itemize}\end{frame}
 
 
 \subsubsection*{SGD}
-%=====================================================Slide 18
-\begin{frame}{Méthode SGD}
-
-Cette méthode ignore $b$  dans la formule \ref{f5}. Le contraint $y_i.(x_i.w - b) + z_i \geq 1$ peut être remplacé par : 
-
-\begin{equation}
-z_i \geq 1 - y_i.(x_i.w)
-\label{f6}
-\end{equation}
-
-A partir du contraint \ref{f6} et $z_i \geq 0$, on peut écrire la function de perte :
-
-\begin{equation}
-z_i = max\lbrace0, 1 - y_i.(x_i.w)\rbrace
-\label{f7}
-\end{equation}
-
-Donc, le programme de quadratique \ref{f5} peut remplacer par la formule \ref{f8} :
-
-\begin{equation}
-\mbox{min}\quad \Psi(w, x, y) = \frac{1}{2} ||w||^2 + \frac{1}{m}\sum\limits_{i=1}^m max\lbrace0, 1 - y_i.(x_i.w)\rbrace\quad
-\label{f8}
-\end{equation}
-
-\end{frame}
+%=====================================================Slide 6
+%\begin{frame}{Introduction - méthode SGD}
+%\begin{itemize}
+%\item SVM est satisfait pour la classification d'image, mais cette méthode est lent
+%$\rightarrow$ SGD est une bonne choix pour améliorer la vitesse
+%\item Même processus avec SVM pour la classification d'image. SGD remplace SVM dans l'étape 3
+%\item Nous développons, parallélisons un algorithme de classification SGD multi-classes pour classification d'image de grand taille
+%\end{itemize}
+%\end{frame}
 
 
 %=====================================================Slide 19
-\begin{frame}{Méthode SGD}
+\begin{frame}{Méthode SGD-SVM}
 \begin{itemize}
-\item SGD ne résoudre pas le problème de programme de quadratique \ref{f5}
-\item $w$ est mise à jour en T étapes avec une vitesse d'apprentissage $\eta$
-\item A chaque étape $t$, SGD utilise un exemple $(x_i, y_i)$ aléatoire pour calculer le sous-gradient et met à jour $w_{t+1}$
-
+\item Ignorer $b$ dans le programme quadratique $f(w, b, z)$ pour obtenir le programme $\Psi(w, [x, y])$(détaille dans le rapport)
+%\item Ne pas résoudre le problème de programme de quadratique
+\pause
+\item $w$ est mis à jour en T étapes
+\pause
+\item A chaque étape $t$, SGD prend aléatoirement n exemples $(x_i, y_i)$ pour calculer le sous-gradient et met à jour $w_{t+1}$
+\pause
 \begin{equation}
-w_{t+1} = w_t - \nabla_w{\Psi(w_t, x_i, y_i)}
+w_{t+1} = w_t - \eta_t\nabla_w{\Psi(w_t, [x_i, y_i])}
 \label{f9}
 \end{equation}
 \end{itemize}
+\pause
+\begin{algorithm}[H]
+\caption{\scriptsize L'algorithm d'apprentissage SGD-SVM binaire}
+\label{sgdal}
+\scriptsize
+\begin{algorithmic}[1]
+\Procedure{trainBinaireSGDSVM}{$X$, $y$, $\lambda$, $T$, $n$}
 
+\State Initialiser $w_1 = 0$
+
+\For{\texttt{t = 0; t < T; t++}}
+
+\State $\eta_t = \frac{1}{\lambda t}$
+
+\State \texttt{Choisir n exemples aléatoire dans X}
+\State $w_{t+1} = w_t - \eta_t\nabla_w{\Psi(w_t, [x_i, y_i])}$
+\EndFor
+\State Return $w_{t}$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 \end{frame}
 
+\section{Algorithme SGD-SVM multi-classes}
+\subsection{Algorithme linéaire de SGD-SVM multi-classes}
 %=====================================================Slide 20
 \begin{frame}{Méthode SGD - propriété}
 \begin{itemize}
-\item SGD résoudre le problème de classification de 2 classes
-\item Une version simple de SVM
-\item Comment résoudre le problème de multi-classes ?
-\end{itemize}
-
-\end{frame}
-
-\subsubsection*{MCSGD}
-%=====================================================Slide 21
-\begin{frame}{Méthode MC-SGD}
-\begin{itemize}
-\item Plusieurs extensions d'une classification binaire afin de traiter le problème de multi-class
-\item Diviser d'abord le problème en plusieurs problèmes de 2 classes et chaque problème de 2 classes est traité par la classification binaire : one-versus-one \cite{vv95} et one-versus-all \cite{uk99}.
+\item SGD résout le problème de classification de 2 classes\\
+\pause
+$\rightarrow$ Comment résoudre le problème de multi-classes ?
+\pause
+\item Diviser d'abord le problème en plusieurs problèmes de 2 classes
+\pause
+\item Chaque problème de 2 classes est traité par la classification binaire
+\item One-versus-one \cite{vv95} et one-versus-all \cite{uk99}.
 \end{itemize}
 \end{frame}
+
 
 %=====================================================Slide 22
 \begin{frame}{Méthode MC-SGD - 1-vs-1}
-\begin{itemize}
-\item Construire \textit{k(k-1)/2} (k est le nombre de classes) classificateurs
-\item Voter et la majorité classificateur va être choisi et la classe correspondant est la classe de prédiction
-\end{itemize}
-
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=70mm]{images/1vs1}
+\includegraphics[width=110mm]{images/1vs1}
 \caption{One-versus-one}
 \label{fig:1vs1}
 \end{figure}
-
+\begin{itemize}
+\item Construire \textit{k(k-1)/2} (k est le nombre de classes) classificateurs
+\pause
+\item Prédiction : voter et la majorité des classificateurs va être choisie
+\end{itemize}
 \end{frame}
+
 
 %=====================================================Slide 23
 \begin{frame}{Méthode MC-SGD - 1-vs-all}
 \begin{itemize}
-\item Construire \textit{k} classificateurs
-\item Chaque classificateur \textit{c}, diviser la classes \textit{c} contre tous les restes
-\item La classe de prédiction est la classe ayant la distance la plus courte entre son classificateur et l'exemple d'entrée.
+\item Problèmes de 1-vs-1 : beaucoup de classificateurs (k(k-1)/2)
+\item 1-vs-all construit \textit{k} classificateurs
 \end{itemize}
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=70mm]{images/1vsall}
+\includegraphics[width=110mm]{images/1vsall}
 \caption{One-versus-all}
 \label{fig:1vs1}
 \end{figure}
-
+\pause
+Prédiction : la classe ayant la distance la plus courte entre son classificateur et l'exemple d'entrée est choisie.
 \end{frame}
 
 
-
-%=======================================================PARTIE Implementation
-\section{Implémentation}
-\subsection{Extraction des caractéristiques}
-\subsubsection*{SIFT}
-%=====================================================Slide 25
-\begin{frame}{Méthode SIFT}
-\begin{itemize}
-\item Utiliser la méthode SIFT
-\item Réutiliser l'implémentation SIFT de \cite{low99}
-\item Chaque vecteur a 128 dimensions
-\end{itemize}
-\end{frame}
-
-\subsubsection*{Sac de mots visuels}
-%=====================================================Slide 26
-\begin{frame}{Methode Sac de mots visuels}
-\begin{itemize}
-\item Utiliser la méthode K-means pour le clustering
-\item Réutiliser l'implémentation K-means de PHAM Nguyen Khang
-\end{itemize}
-\end{frame}
-
-\subsection{Apprentissage automatique}
-\subsubsection*{SGD}
-%=====================================================Slide 27
-\begin{frame}{Méthode SGD}
-\begin{itemize}
-\item D'après l'article Pegasos dans \cite{sss07}
-\item Réutiliser le codage Pegasos pour le problème binaire (de 2 classes)
-\end{itemize}
-
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=90mm]{images/sgdal}
-\caption{Pegasos: une implementation de SGD}
-\label{al:sgd}
-\end{figure}
-
-\end{frame}
-
-\subsubsection*{MCSGD}
-%=====================================================Slide 28
-\begin{frame}{Méthode MC-SGD}
-\begin{itemize}
-\item Utilisation 1-vs-all pour résoudre le problème de multi-classes
-
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=90mm]{images/mc-sgdal}
-\caption{Descente de gradient multi-class 1-vs-all}
-\label{al:mc-sgd}
-\end{figure}
-
-\end{itemize}
-
-\end{frame}
-
+\subsection{Équilibration de MC-SGD}
 %=====================================================Slide 29
-\begin{frame}{Méthode MC-SGD - problème de balance}
+\begin{frame}{MC-SGD - problème de balance}
 \begin{itemize}
-\item Si le problème de 1000 classes, on a 1 exemple positive et 999 exemple négatives
-\item Chaque fois SGD choisit aléatoire un exemple pour d'apprendre, les exemples positives sont rarement choisi (\emph{0.1\%})
-\item Les exemples négatives sont très souvent choisi (\emph{99.9\%})
-\item Résultat de classification est influencé !
+\item Si le problème de 1000 classes, on a 1 exemple positive et 999 exemples négatives
+\item Les exemples positives sont rarement choisis (\emph{0.1\%})
+\item Les exemples négatives sont très souvent choisis (\emph{99.9\%})
+\pause
 \item Comment balancer l'ensemble d'exemples ?
 \end{itemize}
-\end{frame}
-
-%=====================================================Slide 30
-\begin{frame}{Méthode MC-SGD - solution de balance}
+\pause
+Solutions
 \begin{itemize}
-\item Augmentation la probabilité de sélectionné l'exemple positive
-\item Au lieu de choisir aléatoire un exemple pour d'apprendre, l'algorithme choisit aléatoire entre -1 et +1
-\item Si +1 est choisi, SGD choisit aléatoire un exemple pour dans l'ensemble d'exemple positive et inverse
+\item Sous-échantillonnage : augmentation la probabilité sélectionnée de l'exemple positive
+\pause
+\item Coût de données : mettre à jours $w$ par des différents cas par rapport des erreurs obtenues
 \end{itemize}
 \end{frame}
 
-%=====================================================Slide 31
-\begin{frame}{Méthode MC-SGD - solution de balance détaillée}
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=90mm]{images/balance-sgd}
-\caption{Descente de gradient stochastique balancé}
-\label{al:balance-sgd}
-\end{figure}
-\end{frame}
 
-
+\subsection{Parallélisation de MC-SGD}
 %=====================================================Slide 31
-\begin{frame}{Méthode MC-SGD parallèle}
+\begin{frame}{Parallélisation de MC-SGD}
 \begin{itemize}
-\item MC-SGD est linaire, apprendre des modèle l'un après l'autre
-\item Sur des ordinateurs multi-cœurs : pas économie des ressources
+\item MC-SGD est linaire, apprendre des modèles l'un après l'autre
+\item Sur des ordinateurs multi-cœurs : pas économiser des ressources\\
+\pause
 $\rightarrow$ Parallélisation MC-SGD est une bonne solution
+\pause
+\item k processeurs apprennent k modèles en parallèle
+\pause
 \item Nous choisissons OpenMP pour paralléliser cet algorithme
 \end{itemize}
 \end{frame}
 
 
 %=====================================================Slide 31
-\begin{frame}
+\begin{frame}{SGD-Toy de MC-SGD}
+Interface pour la démonstration de MC-SGD, se base sur SVM-Toy\cite{cl01}\\
+Données :
+\begin{itemize}
+\item Chaque point est un exemple
+\item x, y sont 2 caractéristiques d'exemples
+\end{itemize}
+On applique MC-SGD pour la classification
+
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=85mm]{images/sgd-paral}
-\caption{Descente de gradient stochastique parallèle}
-\label{al:sgd-paral}
+\includegraphics[width=50mm]{images/toy}
+\caption{MC-SGD-Toy}
+\label{fig:toy}
 \end{figure}
 \end{frame}
 
 
-\section{Résultat obtenue}
-%=====================================================Slide 33
-\begin{frame}{Introduction}
+%=====================================================Slide 31
+%\begin{frame}
+%\begin{figure}[ht!]
+%\centering
+%\includegraphics[width=85mm]{images/sgd-paral}
+%\caption{Descente de gradient stochastique parallèle}
+%\label{al:sgd-paral}
+%\end{figure}
+%\end{frame}
 
+\section{Expérimentation}
+\begin{frame}{Expérimentation}
+Logiciels références
 \begin{itemize}
-\item Résultat de SVM (LIBSVM) et SGD binaire
-\item Résultat de SVM et SGD multi-classes
-\item Résultat d'application de SVM et SGD multi-classes dans le problème de classification d'images
-\item Pour SGD, chaque expérimentation est réalisée 10 fois et fait le moyenne.
-\item Tous les tests est réalisés sur un même ordinateur (core i7, 8 cœurs, os LINUX Fedora 20)
+\item Extraction des caractéristiques : SIFT[low99], K-Means(pour clustering)
+\item Classification binaire : SGD (implémentation Pegasos).
 \end{itemize}
-
+Matériels utilisées
+\begin{itemize}
+\item PC core-i7, 4 double cœurs, 3G RAM
+\item Système d'exploitation : GNU-Linux Fedora 20
+\end{itemize}
+\pause
+Nos implémentations
+\begin{itemize}
+\pause
+\item Classification multi-classes: MC-SGD et MC-SGD parallèle, implémentés en C/C++ en utilisant l'OpenMP
+\pause
+\item Outils pour étudier notre algorithme: MC-SGD-Toy, basé sur SVM-Toy\cite{cl01}
+\end{itemize}
 \end{frame}
 
+\subsection{Jeux de données}
 %=====================================================Slide 34
-\begin{frame}{SVM et SGD binaire - résultat de classification}
-Expérimentation sur la base Adult, la taille différente, de 1,605 jusqu'à 32,561
-
-\begin{table}
-\begin{center}
-    \begin{tabular}{ | c | c | c | c |}
-    \hline
-    Données & \#Exemple & LIBSVM(\%) & SGD(\%) \\ \hline
-    
-    a1a & 1,605 & 83.82 & 84.30 \\ \hline
-    
-    a2a & 2,265 & 84.27 & 84.48 \\ \hline
-    
-    a3a & 3,185 & 84.33 & 84.31 \\ \hline
-    
-    a4a & 4,781 & 84.44 & 84.33 \\ \hline
-    
-    a5a & 6,414 & 84.39 & 84.33 \\ \hline
-    
-    a6a & 11,220 & 84.72 & 84.34 \\ \hline
-    
-    a7a & 16,100 & 84.83 & 84.45 \\ \hline
-    
-    a8a & 22,696 & 85.16 & 84.95 \\ \hline
-    
-    a9a & 32,561 & 84.97 & 84.64 \\ \hline
-    
-    \end{tabular}
-\end{center}
-\caption{Comparaison entre LIBSVM et SGD-SVM, résultat de classification}
-\label{tab:svmsgd}
-\end{table}
-
-\end{frame}
-
-%=====================================================Slide 35
-\begin{frame}{SVM et SGD binaire - le temps}
-
-Le temps d'apprentissage de 2 méthodes et la comparaison
-
+\begin{frame}{Jeux de données}
 \begin{table}
 \begin{center}
     \begin{tabular}{ | c | c | c | c | c |}
     \hline
-    Données & \#Exemple & LIBSVM(s) & SGD(s) & $\frac{SVM(s)}{SGD(s)}$ \\ \hline
+    Données & \#classes & \#train & \#test & \#mots(bow) \\ \hline
+
+    Cal 101 & 101 & 1515 & 1515 & 124000 \\ \hline
+
+    Cal 7 3D & 7 & 4290 & 2145 & 5000 \\ \hline 
+
+    ImgNet 3d & 10 & 4450 & 2225 & 5000 \\ \hline
+
+    ImgNet & 10 & 4450 & 2225 & 50000 \\ \hline
     
-    a1a & 1,605 & 0.438 & 0.044 & 10 \\ \hline
+    Protein & 3 & 14895 & 6621 & 357 \\ \hline
     
-    a2a & 2,265 & 0.826 & 0.045 & 18 \\ \hline
-    
-    a3a & 3,185 & 6.990 & 0.050 & 139 \\ \hline
-    
-    a4a & 4,781 & 3.162 & 0.043 & 73 \\ \hline
-    
-    a5a & 6,414 & 5.766 & 0.048 & 120 \\ \hline
-    
-    a6a & 11,220 & 20.846 & 0.049 & 425 \\ \hline
-    
-    a7a & 16,100 & 42.392 & 0.056 & 757 \\ \hline
-    
-    a8a & 22,696 & 91.500 & 0.054 & 1,694 \\ \hline
-    
-    a9a & 32,561 & 299.648 & 0.064 & 4,682 \\ \hline
-    
+    Mnist & 10 & 30000 & 30000 & 780 \\ \hline
+
     \end{tabular}
 \end{center}
-\caption{Comparaison entre LIBSVM et SGD-SVM, le temps}
-\label{tab:svmsgdtime}
+\caption{Information sur des données}
+\label{tab:infod1}
 \end{table}
-
-\end{frame}
-
-%=====================================================Slide 36
-\begin{frame}{SVM et SGD binaire}
-
-Le temps d'apprentissage de 2 méthodes et la comparaison
-
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=100mm]{images/res}
-\caption{Comparaison de la vitesse entre LIBSVM et SGD binaire}
-\label{fig:res}
-\end{figure}
-
 \end{frame}
 
 
-%=====================================================Slide 37
-\begin{frame}{SVM et SGD multi-classes}
+\subsection{Résultat obtenu}
+%=====================================================Slide 38
+\begin{frame}{Classification d'images avec SVM et SGD multi-classes}
+%\begin{itemize}
+%\item SVM : function linaire
+%\item SGD : -iter 1000 -k 10 -lambda 0.6
+%\end{itemize}
 
 \begin{table}
 \begin{center}
     \begin{tabular}{ | c | c | c | c | c | c |}
     \hline
     Données & SVM(\%) & SGD(\%) & SVM(s) & SGD(s) & $\frac{SVM(s)}{SGD(s)}$ \\ \hline
+
+    Cal 101 & 61.52 & 65.12 & 2873 & 106.95 & \textbf{26.9} \\ \hline
     
-    mnist & 86.92 & 86.46 & 2810 & 0.72 & 3902.8 \\ \hline
+    Cal 7 3D & 91.52 & 88.3 & 113.4 & 0.81 & \textbf{140} \\ \hline 
+
+    ImgNet 3d & 76.54 & 75.8 & 144 & 0.90 & \textbf{160} \\ \hline
     
-    fr & 84.08 & 86.58 & 327 & 1.64 & 199.4 \\ \hline
+    ImgNet & 84.08 & 86.58 & 327 & 1.64 & \textbf{199.4} \\ \hline
+
+    Protein & 68.23 & 68.41 & 551 & 0.20 & \textbf{2755} \\ \hline
     
-    3d & 76.54 & 75.8 & 144 & 0.90 & 160 \\ \hline
+    Mnist & 86.92 & 86.46 & 2810 & 0.72 & \textbf{3902.8} \\ \hline
     
     \end{tabular}
 \end{center}
-\caption{Comparaison entre LIBSVM et MC-SGD linaire et MC-SGD parallèle}
+\caption{Comparaison entre LIBSVM et MC-SGD parallèle}
 \label{tab:pmcsvm}
 \end{table}
-
 \end{frame}
 
 
-
-%=====================================================Slide 38
-\begin{frame}{Classification avec SVM et SGD multi-classes}
-
-\begin{table}
-\begin{center}
-    \begin{tabular}{ | c | c | c | c | c | c |}
-    \hline
-    Données & SVM(\%) & SGD(\%) & SVM(s) & SGD(s) & $\frac{SVM(s)}{SGD(s)}$ \\ \hline
-    
-    S8c & 58.04 & 57.74 & 15 & 0.18 & 83.3 \\ \hline
-    
-    Cal 101 & 61.52 & 65.12 & 2873 & 106.95 & 26.9 \\ \hline    
-    
-    Cal 101 & 61.52 & 57.12 & 2873 & 74 & 38.8 \\ \hline   
-    
-    Cal 7 3D & 91.52 & 88.3 & 113.4 & 0.81 & 140 \\ \hline    
-    
-    \end{tabular}
-\end{center}
-\caption{Comparaison entre LIBSVM et MC-SGD parallèle pour la classification d'images}
-\label{tab:pmcsvm-8scenes}
-\end{table}
-
+%=====================================================Slide 31
+\begin{frame}{Classification avec SVM et MC-SGD}
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=110mm]{images/res1}
+\caption{Comparaison de SVM et MC-SGD (SVM/MC-SGD)}
+\label{fig:res}
+\end{figure}
 \end{frame}
 
 \section{Conclusion}
 %=====================================================Slide 40
 \begin{frame}{Conclusion}
 \begin{itemize}
-\item Nous avons étudié le processus pour la classification d'images utilisant la méthode SVM, une méthode pour la classification générale
-\item A partir de l'implémentation Pegasos, nous avons développé la méthode MC-SGD de classification multi-classes
-\item MC-SGD est plus vite que SVM. Cette méthode correspond bien pour la classification d'image
+\item Nous avons étudié le processus pour la classification d'images utilisant la méthode SVM
+\pause
+\item Nous avons implémenté la méthode MC-SGD de classification multi-classes
+\pause
+\item Résoudre le problème de balance quand la base de données est de multi-classes
+\pause
+\item Paralléliser MC-SGD
+\pause
+\item Implémenter MC-SGD-Toy pour étudier l'algorithme MC-SGD
+\pause
+\item MC-SGD est plus vite que SVM, correspond bien pour la classification d'image
 \end{itemize}
 \end{frame}
-
-%=====================================================Slide 41
-\begin{frame}{Conclusion (con)}
-\begin{itemize}
-\item Nous avons modifié l'implémentation Pegasos pour résoudre le problème de balance quand la base de données est de multi-classes
-\item Pour économiser la ressource des ordinateurs multi-cœurs, nous avons paralléliser MC-SGD
-\item Dans les testes que nous avons réalisé, le résultat de classification de SGD et SVM n'est pas beaucoup différent, tandis que SGD est beaucoup plus rapide que SVM
-\item SGD s'adapte bien au problème de classification d'image
-\end{itemize}
-\end{frame}
-
 
 %=====================================================Slide 42
 \begin{frame}{Perspective}
 \begin{itemize}
-\item SGD est difficile de tester : choix des paramètres entrées
-\item Le seuil de itération (nombre de cycle) de methode ($iter\ x\ nb\_ex\_per\_iter$) est de 500 à 50000, $\lambda$ est de 0.0001 à 0.5 SGD peut donner le bon résultat
-\item Dans le future proche, nous étudierons pour chercher des paramètres optimales de la méthode
+\item SGD est difficile de choisir des paramètres entrées
+\pause
+\item Nous étudierons pour chercher des paramètres optimales de la méthode
+\pause
 \item Nous testerons aussi des bases d'images plus grandes tel que ImageNet
-\item Nous développerons pour SGD s'adapte à la classification de vidéos
+\pause
+\item Nous développerons pour que SGD s'adapte à la classification de vidéos
 \end{itemize}
 \end{frame}
-
 
 
 \end{otherlanguage}
@@ -769,6 +570,8 @@ Le temps d'apprentissage de 2 méthodes et la comparaison
 % All of the following is optional and typically not needed. 
 \section*{Références}
 %=====================================================Slide 43
+\begin{small}
+
 \begin{frame}{Références}
 \begin{thebibliography}{9}
 
@@ -781,9 +584,13 @@ mated sub-gradient solver for svm.}, Proceedings of the Twenty-Fourth Internatio
 
 \bibitem{uk99} U.Krebel, \emph{Pairwise classification and support vector machines}, Support Vector Learning, Advances in Kernel Methods. pp.255–268. (1999).
 
+\bibitem{cl01} C.Chang and C.Lin, \emph{LIBSVM – a library for support vector machines}, http://www.csie.ntu.edu.tw/~cjlin/libsvm (2001).
+
 
 \end{thebibliography}
 \end{frame}
+
+\end{small}
 
 %=====================================================Slide 44
 \begin{frame}
