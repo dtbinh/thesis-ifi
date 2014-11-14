@@ -35,6 +35,18 @@
 \usepackage{subcaption}
 \usepackage{afterpage}
 \usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+% total={210mm,297mm},
+ left=35mm,
+ right=25mm,
+ top=25mm,
+ bottom=25mm,
+ }
+
+
 \let\oldlistofalgorithms\listofalgorithms
 \renewcommand{\listofalgorithms}{%
   \begingroup%
@@ -52,7 +64,7 @@
 
 \fancyhead[L]{}
 
-
+\onehalfspacing
 
 \newlength\mylen
 \newcommand\myinput[1]{%

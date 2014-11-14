@@ -20,7 +20,9 @@ Dans ces étapes, nous avons réutilisé des codages existant en modifiant des e
 Avec notre processus, après avoir apliqué le modèle sac de mot visuel, nous appliquons un algorithme d'apprentissage pour classifier des images vers leurs classes. Nous avons développé l'algorithme MC-SGD et pour vérifier la performance de notre algorithme, nous avons fait la comparaison avec la bibliothèque LibSVM \cite{cl01}, l'implémentation de la méthode SVM la plus utilisée actuellement.
 
 \subsection{Descente de gradient stochastique (SGD)}
-Pour cette méthode, il existe plusieurs d'implémentations différentes. Dans notre travail, nous avons réutilisé l'implémentation \textit{Pegasos} \cite{sss07} ci-dessous :
+Pour cette méthode, il existe plusieurs d'implémentations différentes. Dans notre travail, nous avons réutilisé l'implémentation \textit{Pegasos} \cite{sss07}, l'algorithme \ref{sgdal}~.\\
+
+Dans cet algorithme, $D$, $y$, $\lambda$, $T$, $n$ sont des paramètres entrées. $D$ est une matrice d'exemples d'entrainement et $y$ est un vecteur de labels. $\lambda$ est une paramètres pour la vitesse d'apprentissage, cette paramètre est très important, elle influence fortement au résultat de classification et à la vitesse d'apprentissage. $T$ est le nombre d'itération de l'algorithme SGD que l'on veut. $n$ est le nombre d'exemples aléatoires que l'on veut prendre pour l'entrainement dans chaque itération du SGD.
 
 \begin{algorithm}[H]
 \caption{L'algorithm d'apprentissage SGD binaire}\label{sgdal}
@@ -33,7 +35,7 @@ Pour cette méthode, il existe plusieurs d'implémentations différentes. Dans n
 
 \State $\eta = \frac{1}{\lambda}$
 
-\Comment{Boucle pour choisir ex exemples chaque cycle}
+\Comment{Boucle pour choisir n exemples chaque cycle}
 \For{\texttt{i = 0; i < n; i++}}
 \State \texttt{choisir un exemple aléatoire dans D}
 \If{\texttt{${y_i}_t.(w_t,{x_i}_t) < 1$}}
@@ -50,6 +52,8 @@ Pour cette méthode, il existe plusieurs d'implémentations différentes. Dans n
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
+
+\textbf{\emph{Notes :}} $\lambda$ et $T$ sont influencées une de l'autre. Si l'on met $\lambda$ grande et $T$ petite, l'algorithme n'apprend pas beaucoup. Inverse, si l'on met $\lambda$ petit et $T$ grand, l'algorithme sera facile de dépasser l'erreur minimum, donc, le w trouvé ne sont pas optimal. Le choix de ces deux paramètres dépend la base de données. Dans quelques cas, on peut mettre $\lambda = 0.001$ et $T = 10000$.
 
 
 \subsection{Descente de gradient stochastique pour multi-classe (MC-SGD)}
@@ -137,7 +141,7 @@ Nous trouvons que notre processus est acceptable, one-versus-all s'adapte bien p
 La version d'optimisation par équilibration des données de l'option one-vs-all consiste à augmenter la probabilité sélectionné des exemples positifs pour que la probabilité sélectionnée des exemples positifs soit égale celle des exemples négatifs. Pour cela, au lieu de choisir aléatoirement un exemple pour d'apprendre, l'algorithme choisit aléatoirement entre -1 et +1, si +1 est choisi, le SGD choisit aléatoirement un exemple dans l'ensemble d'exemple positif et inverse.
 
 \begin{algorithm}[H]
-\caption{L'algorithm d'apprentissage SGD binaire balancé}\label{balance-sgdal}
+\caption{L'algorithm d'apprentissage SGD binaire balancé par données}\label{balance-sgdal}
 \begin{algorithmic}[1]
 \Procedure{trainBinaireSGDSVM}{$D$, $y$, $\lambda$, $T$, $n$}
 
@@ -171,12 +175,14 @@ La version d'optimisation par équilibration des données de l'option one-vs-all
 \end{algorithmic}
 \end{algorithm}
 
+\emph{\textbf{Notes :}} On constate que le choix aléatoire entre 1 et -1 va être équilibré car la probabilité de 1 et -1 sera égale
+
 \textbf{Équilibration par optimisation de l'algorithme}\\
 
 Au lieu d'augmenter la probabilité sélectionné des exemples positifs comme l'équilibration par optimisation des données, la version d'optimisation par optimisation de l'algorithme de l'option one-vs-all consiste à mettre à jours le poids avec le coût différent dans deux cas différents : petit erreur et grande erreur. Particulièrement, on met deux seuils de 0 et de 1 pour ${y_i}_t.(w_t.{x_i}_t))$.
 
 \begin{algorithm}[H]
-\caption{L'algorithm d'apprentissage SGD binaire balancé}\label{balance-sgdal}
+\caption{L'algorithm d'apprentissage SGD binaire balancé par algorithme}\label{balance-sgdal}
 \begin{algorithmic}[1]
 \Procedure{trainBinaireSGDSVM}{$D$, $y$, $\lambda$, $T$, $n$}
 
@@ -252,7 +258,7 @@ Données :
 \item x, y sont 2 caractéristiques d'exemples
 \end{itemize}
 On applique MC-SGD pour la classification des points entrées par rapport des distances entre eux.\\
-\begin{figure}[ht!]
+\begin{figure}[H]
 \centering
 \includegraphics[width=50mm]{images/toy}
 \caption{MC-SGD-Toy}
