@@ -1,29 +1,31 @@
-\chapter{Implémentation}
+\chapter{Algorithme MC-SGD pour la classification d'images}
 \label{chap:impl}
 
 \section{Introduction}
-Dans le chapitre précédent, nous avons généralement présenté des méthodes concernant notre travail. Après avoir étudié des différentes méthodes, dans chaque étape, nous avons choisi une méthode qui peut mieux adapter à notre travail. Durant notre recherche, il existe déjà des codages qui a la performance efficace, donc, nous avons réutilisé ces codages. Au contrait, pour les étapes qui n'existent pas encore des codages, nous avons les implémenté nous-même ou nous avons modifié des codages qui n'ont bien adapté pas à notre travail.
+Dans le chapitre précédent, nous avons généralement présenté des méthodes concernant notre travail. Ce chapitre permet de présenter le détail de ces méthode et essayé d'écrire des pseudo-codes de ces algorithme.\\
 
-\section{Représentation par des descripteurs et méthode sac de mots}
-La description des images est très importante dans la classification d'images. Cette étape est beaucoup influencée au résultat final. Dans le domaine de recherche d'images et de classification d'images, le descripteur SIFT \cite{low04} est un caractéristique important pour la représentation des images. Cette méthode est de plus en plus populaire. A partir de l'idée de la classification de textes, dans la recherche en 2007 \cite{bos07}, les auteurs proposent un système de classification d'images utilisant le descripteur SIFT et le modèle sac de mot visuel (Bag of Visual Word). Cette méthode peut diviser en 3 étapes :
+Comme nous avons parlé, notre processus comprend 2 stages : extraction des caractéristiques et apprentissage automatique. Tout d'abord nous présentons le stage d'extraction des caractéristiques avec le modèle sac de mots. Ensuite nous parlons du stage d'apprentissage automatique avec l'algorithme MC-SGD que nous avons proposé.
+
+\section{Représentation d'une image par des descripteurs et le modèle sac de mots}
+La description des images est très importante dans la classification d'images. Cette étape beaucoup influence au résultat final. Dans le domaine de recherche d'images et de classification d'images, le descripteur SIFT \cite{low04} est un caractéristique important pour la représentation des images. Cette méthode est de plus en plus populaire. A partir de l'idée de la classification de textes, dans la recherche en 2007 \cite{bos07}, les auteurs proposent un système de classification d'images utilisant le descripteur SIFT et le modèle sac de mots visuels (Bag of Visual Word). Cette méthode peut diviser en 3 étapes :
 \begin{enumerate}
 \item Trouver des descripteurs locales des images (des caractères)
 \item Construire un dictionnaire a partir des caractères
 \item Représenter des images par des histogrammes
 \end{enumerate}
 
-Dans ces étapes, nous avons réutilisé des codages existant en modifiant des entrées et des sorties pour adapter aux étapes suivantes. Précisément, dans l'étape \textit{1}, nous avons réutilisé le codage de D.Lowe \cite{low99} pour créer des vecteurs de caractéristiques (descripteurs). Ensuite, l'étape \textit{2} sert à construire un dictionnaire. Dans cette étape, la méthode k-moyenne \cite{mq67} est appliquée afin de créer des clusters a partir des vecteurs SIFT créés dans l'étape \textit{1}. L'ensemble de clusters est considéré comme un dictionnaire. Enfin, dans l'étape \textit{3}, une image est représentée par un histogramme. Dans cette étape, d'abord, on met chaque vecteur SIFT dans chaque image à un cluster le plus proche de ce vecteur (sa base sur la distance entre ce vecteur au centre des clusters). Ensuite, on compte le fréquence des mots d'une image existe dans le dictionnaire créé dans l'étape \textit{2} pour représenter l'image comme un histogramme de fréquence. Pour l'étape \textit{3}, nous avons implémenté en C/C++.
+Dans ces étapes, nous avons réutilisé des codages existant en modifiant des entrées et des sorties pour adapter aux étapes suivantes. Précisément, dans l'étape \textit{1}, nous avons réutilisé le codage de D.Lowe \cite{low99} pour créer des vecteurs de caractéristiques (descripteurs). Ensuite, l'étape \textit{2} sert à construire un dictionnaire. Dans cette étape, la méthode k-moyenne \cite{mq67}, l'implémentation de Nguyen-Khang PHAM \cite{khang} est appliquée afin de créer des clusters à partir des vecteurs SIFT créés dans l'étape \textit{1}. L'ensemble de clusters est considéré comme un dictionnaire. Enfin, dans l'étape \textit{3}, une image est représentée par un histogramme. Dans cette étape, d'abord, on met chaque vecteur SIFT dans chaque image à un cluster le plus proche de ce vecteur (basé sur la distance entre ce vecteur au centre des clusters). Ensuite, on compte le fréquence des mots d'une image existe dans le dictionnaire créé dans l'étape \textit{2} pour représenter l'image comme un histogramme de fréquence. Pour l'étape \textit{3}, nous avons implémenté en C/C++.
 
 \section{Apprentissage automatique}
-Avec notre processus, après la méthode sac de mot visuel, nous appliquons un algorithme d'apprentissage pour classifier des images vers leurs classes. Nous avons développé la méthode MC-SGD et pour vérifier la performance de notre méthode, nous avons fait la comparaison avec l'application LIBSVM \cite{cl01}, l'implémentation de SVM le plus utilisée actuellement.
+Avec notre processus, après avoir apliqué le modèle sac de mot visuel, nous appliquons un algorithme d'apprentissage pour classifier des images vers leurs classes. Nous avons développé l'algorithme MC-SGD et pour vérifier la performance de notre algorithme, nous avons fait la comparaison avec la bibliothèque LibSVM \cite{cl01}, l'implémentation de la méthode SVM la plus utilisée actuellement.
 
 \subsection{Descente de gradient stochastique (SGD)}
 Pour cette méthode, il existe plusieurs d'implémentations différentes. Dans notre travail, nous avons réutilisé l'implémentation \textit{Pegasos} \cite{sss07} ci-dessous :
 
 \begin{algorithm}[H]
-\caption{L'algorithm d'apprentissage SGD-SVM binaire}\label{sgdal}
+\caption{L'algorithm d'apprentissage SGD binaire}\label{sgdal}
 \begin{algorithmic}[1]
-\Procedure{trainBinaireSGDSVM}{$D$, $y$, $\lambda$, $T$, $n$}
+\Procedure{trainBinaireSGD}{$D$, $y$, $\lambda$, $T$, $n$}
 
 \State Initialiser $w_1 = 0$
 
@@ -32,7 +34,7 @@ Pour cette méthode, il existe plusieurs d'implémentations différentes. Dans n
 \State $\eta = \frac{1}{\lambda}$
 
 \Comment{Boucle pour choisir ex exemples chaque cycle}
-\For{\texttt{ex = 0; ex < n; ex++}}
+\For{\texttt{i = 0; i < n; i++}}
 \State \texttt{choisir un exemple aléatoire dans D}
 \If{\texttt{${y_i}_t.(w_t,{x_i}_t) < 1$}}
 \State $w_{t+1} = (1 - \eta_t.\lambda).w_t + \eta_t.{y_i}_t.{x_i}_t$
@@ -50,23 +52,61 @@ Pour cette méthode, il existe plusieurs d'implémentations différentes. Dans n
 \end{algorithm}
 
 
-
 \subsection{Descente de gradient stochastique pour multi-classe (MC-SGD)}
-Comme les autres algorithme de SVM, SGD est implémenté pour résoudre le problème de classification de 2 classes. L'implémentation \textit{Pegasos} \cite{sss07} est efficace. A partir de cette implémentation, nous les avons modifié et développé pour résoudre le problème de multi-classes (k classes, $k \geq 3$). \\
+Comme les autres algorithme de la méthode SVM, le SGD est implémenté pour résoudre le problème de classification de 2 classes. L'implémentation \textit{Pegasos} \cite{sss07} est efficace. A partir de cette implémentation, nous l'avons modifiée et développée pour résoudre le problème de multi-classes (k classes, $k \geq 3$). \\
 
-Pour le problème de classification de multi-classes, comme nous avons expliqué dans la partie précédente, nous avons utilisé la méthode \textit{one-vs-all}. Cette méthode ne construit que k classificateur (k est le nombre de classes). Par exemple, quand le problème a trois classes comme l'image \ref{mclass}. \textit{One-vs-all} va construire trois classificateurs comme l'image \ref{1vsall}.
+Pour le problème de classification multi-classes, nous avons implémenté les deux versions \textit{one-vs-one et one-vs-all} du MC-SGD.
 
-
+\subsubsection{One-vs-one}
+Pour la classification de k classes, cette méthode construit k(k-1)/2 classificateurs. Par exemple, quand le problème a 1000 classes, \textit{one-vs-one} va construire 450000 classificateurs. On voit ci-dessous l'implémentation de MC-SGD d'après one-vs-one.
 
 \makeatletter
 \def\BState{\State\hskip-\ALG@thistlm}
 \makeatother
 
+\begin{algorithm}[H]
+\caption{L'algorithm d'apprentissage MC-SGD one-vs-one}\label{mcsgdal}
+\begin{algorithmic}[1]
+\Procedure{trainMCSGDOneOne}{$D$, $y$, $k$, $\lambda$, $T$, $n$}
+
+\Comment{D est les données d'apprentissage }\\
+\Comment{y est les labels des données }\\
+\Comment{k est le nombre de classes dans D}\\
+\Comment{$\lambda$ est le constant possible }\\
+\Comment{T est le nombre de cycles }\\
+\Comment{n est le nombre d'exemple par cycle }\\
+
+\State Initialiser k(k-1)/2 modèles w
+
+\For{\texttt{c1 = 0; c1 < k-1; c1++}}
+\For{\texttt{c2 = c1+1; c2 < k; c2++}}\\
+\Comment{Préparation des données pour 1-vs-1}
+\State \texttt{$y_i = +1$ si l'exemple de classe c1, $y_i = -1$ si de c2}
+\State \texttt{$w_c = trainBinaireSGDSVM(D, y, \lambda, T, n)$} $(c1-vs-c2)$
+\EndFor
+\EndFor
+
+
+\State Return $w$
+
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+\subsubsection{One-vs-all}
+One-vs-one est balancée, la classification est acceptable mais cet algorithme construit beaucoup de classificateurs k(k-1)/2. quand le nombre de classes est grand, cet algorithme perd beaucoup de temps pour l'apprentissage et la classification.
+
+Pour la classification de k classes, one-vs-all ne construit que k classificateurs. Par exemple, quand le problème a 1000 classes, \textit{one-vs-all} va construire 1000 classificateurs. On trouve que 1000 est beaucoup plus petit que 450000. On voit ci-dessous l'implémentation du MC-SGD de la version one-vs-all.
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
 
 \begin{algorithm}[H]
-\caption{L'algorithm d'apprentissage SGD-SVM pour multi-classes}\label{mcsgdal}
+\caption{L'algorithm d'apprentissage MC-SGD one-vs-all}\label{mcsgdal}
 \begin{algorithmic}[1]
-\Procedure{trainMCSGDSVM}{$D$, $y$, $k$, $\lambda$, $T$, $n$}
+\Procedure{trainMCSGDOneAll}{$D$, $y$, $k$, $\lambda$, $T$, $n$}
 
 \Comment{D est les données d'apprentissage }\\
 \Comment{y est les labels des données }\\
@@ -80,7 +120,7 @@ Pour le problème de classification de multi-classes, comme nous avons expliqué
 \For{\texttt{c = 0; c < k; c++}}\\
 \Comment{Préparation des données pour one-vs-all}
 \State \texttt{$y_i = +1$ si l'exemple de classe c, $y_i = -1$ sinon}
-\State \texttt{$w_c = trainBinaireSGDSVM(D, y, \lambda, T, n)$} $(c-vs-all)$
+\State \texttt{$w_c = trainBinaireSGD(D, y, \lambda, T, n)$} $(c-vs-all)$
 \EndFor
 
 \State Return $w$
@@ -89,12 +129,15 @@ Pour le problème de classification de multi-classes, comme nous avons expliqué
 \end{algorithmic}
 \end{algorithm}
 
+\subsubsection{Problème de données non balancées du MC-SGD}
+Nous trouvons que notre processus est acceptable, one-versus-all s'adapte bien pour la classification multi-classes. Malheureusement, la version one-vs-all essaie de séparer un ensemble de k exemples vers une classe positive et (k-1) classes négatives, donc, pour les bases de données qui se composent beaucoup de classes, cet algorithme trouve le problème de données non balancées. Par exemple, si le problème de 1000 classes, on a 1 exemple positif et 999 exemple négatifs. Chaque fois où le SGD choisit aléatoire un exemple pour apprendre, les exemples positifs sont rarement choisis (probabilités de \emph{0.1\%}) mais les exemples négatifs sont très souvent choisis (probabilités de \emph{99.9\%}). Donc, le résultat de classification est influencé ! Pour ce problème, on a deux options pour le résoudre : optimisation par équilibration des données et optimisation par algorithme.\\
 
-\subsection{Balance de MC-SGD}
-Nous trouvons que notre processus est acceptable, one-versus-all s'adapte bien pour la classification multi-classes. Malheureusement, pour les base de données se compose de beaucoup de classes. Par exemple, si le problème de 1000 classes, on a 1 exemple positive et 999 exemple négatives. Chaque fois SGD choisit aléatoire un exemple pour d'apprendre, les exemples positives sont rarement choisi (probabilité de \emph{0.1\%}) mais les exemples négatives sont très souvent choisi (probabilité de \emph{99.9\%}). Donc, le résultat de classification est influencé ! C'est la raison pour laquelle on a besoin d'augmenter la probabilité de sélectionné l'exemple positive. Au lieu de choisir aléatoire un exemple pour d'apprendre, l'algorithme choisit aléatoire entre -1 et +1, si +1 est choisi, SGD choisit aléatoire un exemple pour dans l'ensemble d'exemple positive et inverse.
+\textbf{Optimisation par équilibration des données}\\
+
+La version d'optimisation par équilibration des données de l'option one-vs-all consiste à augmenter la probabilité sélectionné des exemples positifs pour que la probabilité sélectionnée des exemples positifs soit égale celle des exemples négatifs. Pour cela, au lieu de choisir aléatoirement un exemple pour d'apprendre, l'algorithme choisit aléatoirement entre -1 et +1, si +1 est choisi, le SGD choisit aléatoirement un exemple dans l'ensemble d'exemple positif et inverse.
 
 \begin{algorithm}[H]
-\caption{L'algorithm d'apprentissage SGD-SVM binaire balancé}\label{balance-sgdal}
+\caption{L'algorithm d'apprentissage SGD binaire balancé}\label{balance-sgdal}
 \begin{algorithmic}[1]
 \Procedure{trainBinaireSGDSVM}{$D$, $y$, $\lambda$, $T$, $n$}
 
@@ -104,9 +147,9 @@ Nous trouvons que notre processus est acceptable, one-versus-all s'adapte bien p
 
 \State $\eta = \frac{1}{\lambda}$
 
-\Comment{Boucle pour choisir ex exemples chaque cycle}
-\For{\texttt{ex = 0; ex < n; ex++}}
-\State \texttt{choisir aléatoire entre +1 et -1}
+\Comment{Boucle pour choisir n exemples chaque cycle}
+\For{\texttt{i = 0; i < n; i++}}
+\State \texttt{choisir aléatoirement entre +1 et -1}
 \If{+1 est choisi}
 \State \texttt{choisir un exemple positive aléatoire dans D}
 \Else
@@ -128,28 +171,62 @@ Nous trouvons que notre processus est acceptable, one-versus-all s'adapte bien p
 \end{algorithmic}
 \end{algorithm}
 
+\textbf{Équilibration par optimisation de l'algorithme}\\
 
-
-
-\subsection{Parallélisation de MC-SGD}
-Nous trouvons que l'algorithme \ref{mcsgdal} linaire, il apprend les modèles l'un après l'autre sur un seul cœur du processeur d'ordinateur. Donc, les autres cœurs ne font rien et l'algorithme est lent. A notre époque, nous pouvons utiliser tous les cœurs possibles pour améliorer la vitesse de notre algorithme en utilisant la programmation parallèle.\\
-
-Pour le problème de multi-classes (k classes), l'algorithme SGD-SVM apprend indépendant chaque classificateur. Donc, c'est possible d'apprendre chaque classificateur sur chaque cœur différent. Dans notre implémentation, nous avons parallélisé la boucle sur l'apprentissage des classificateur. Supposons que nous avons p processeurs et k classificateurs. Donc, chaque processeur apprend $n = \frac{k}{p}$ ou $n = \frac{k}{p} + 1$ classificateurs.
+Au lieu d'augmenter la probabilité sélectionné des exemples positifs comme l'équilibration par optimisation des données, la version d'optimisation par optimisation de l'algorithme de l'option one-vs-all consiste à mettre à jours le poids avec le coût différent dans deux cas différents : petit erreur et grande erreur. Particulièrement, on met deux seuils de 0 et de 1 pour ${y_i}_t.(w_t.{x_i}_t))$.
 
 \begin{algorithm}[H]
-\caption{L'algorithm d'apprentissage SGD-SVM parallèle pour multi-classes}\label{pmcsgdal}
+\caption{L'algorithm d'apprentissage SGD binaire balancé}\label{balance-sgdal}
 \begin{algorithmic}[1]
-\Procedure{trainMCSGDSVMParallel}{$D$, $y$, $k$, $\lambda$, $T$, $n$}
+\Procedure{trainBinaireSGDSVM}{$D$, $y$, $\lambda$, $T$, $n$}
+
+\State Initialiser $w_1 = 0$
+
+\For{\texttt{t = 0; t < T; t++}}
+
+\State $\eta = \frac{1}{\lambda}$
+
+\Comment{Boucle pour choisir n exemples chaque cycle}
+\For{\texttt{i = 0; i < n; i++}}
+\State \texttt{choisir un exemple aléatoire dans D}
+
+\If{${y_i}_t.(w_t,{x_i}_t) < 0$}
+\State $w_{t+1} = (1 - \eta_t.\lambda).w_t + \frac{\eta_t.{y_i}_t.{x_i}_t}{D+}$
+\ElsIf{${y_i}_t.(w_t,{x_i}_t) < 1$}
+\State $w_{t+1} = (1 - \eta_t.\lambda).w_t + \frac{\eta_t.{y_i}_t.{x_i}_t.(1 - {y_i}_t.(w_t.{x_i}_t))}{D+}$
+\Else
+\State $w_{t+1} = (1 - \eta_t.\lambda).w_t$
+\EndIf
+\EndFor
+
+\EndFor
+
+\State Return $w_{t}$
+
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+\subsubsection{Parallélisation du MC-SGD}
+Nous trouvons que l'algorithme \ref{mcsgdal} linéaire apprend les modèles l'un après l'autre sur un seul cœur du processeur d'un ordinateur. Donc, les autres cœurs ne font rien et l'algorithme est lent. A notre époque, nous pouvons utiliser tous les cœurs possibles pour améliorer la vitesse de notre algorithme en utilisant la programmation parallèle.\\
+
+Pour le problème de multi-classes (k classes), l'algorithme SGD apprend indépendant chaque classificateur. Donc, c'est possible d'apprendre chaque classificateur sur chaque cœur différent. Dans notre implémentation, nous avons parallélisé l'itération sur l'apprentissage des classificateur. Supposons que nous avons p processeurs et k classificateurs. Donc, chaque processeur apprend $n = \frac{k}{p}$ ou $n = \frac{k}{p} + 1$ classificateurs.
+
+\begin{algorithm}[H]
+\caption{L'algorithm d'apprentissage SGD parallèle pour multi-classes}\label{pmcsgdal}
+\begin{algorithmic}[1]
+\Procedure{trainMCSGDParallel}{$D$, $y$, $k$, $\lambda$, $T$, $n$}
 
 \State Initialiser k modèles w
 \\
 \BState \textbf{Pocesseur 1:}
 \State \texttt{$y_i = +1$ si l'exemple de classe c (c = 1, classe 1.p + 1, classe 2.p + 1, ...) et $y_i = -1$ sinon}
-\State \texttt{$w_c = trainBinaireSGDSVM(D, y, \lambda, T, n)$} $(c-vs-all)$
+\State \texttt{$w_c = trainBinaireSGD(D, y, \lambda, T, n)$} $(c-vs-all)$
 \\
 \BState \textbf{Pocesseur 2:}
 \State \texttt{$y_i = +1$ si l'exemple de classe c (c = 2, classe 1.p + 2, classe 2.p + 2, ...) et $y_i = -1$ sinon}
-\State \texttt{$w_c = trainBinaireSGDSVM(D, y, \lambda, T, n)$} $(c-vs-all)$
+\State \texttt{$w_c = trainBinaireSGD(D, y, \lambda, T, n)$} $(c-vs-all)$
 
 \State .
 \State .
@@ -157,7 +234,7 @@ Pour le problème de multi-classes (k classes), l'algorithme SGD-SVM apprend ind
 \\
 \BState \textbf{Pocesseur p:}
 \State \texttt{$y_i = +1$ si l'exemple de classe c (c = p, classe 1.p + p, classe 2.p + p, ...) et $y_i = -1$ sinon}
-\State \texttt{$w_c = trainBinaireSGDSVM(D, y, \lambda, T, n)$} $(c-vs-all)$
+\State \texttt{$w_c = trainBinaireSGD(D, y, \lambda, T, n)$} $(c-vs-all)$
 
 \BState Return $w$
 
@@ -165,6 +242,39 @@ Pour le problème de multi-classes (k classes), l'algorithme SGD-SVM apprend ind
 \end{algorithmic}
 \end{algorithm}
 
-Avec la structure comme l'algorithme \ref{pmcsgdal}, à chaque boucle, p processeurs apprennent p classificateurs en parallèle. Alors, la vitesse améliore presque p fois si l'on compare avec la version linaire de cet algorithme, l'algorithme \ref{mcsgdal}.
+Avec la structure comme l'algorithme \ref{pmcsgdal}, à chaque boucle, p processeurs apprennent p classificateurs en parallèle. Alors, la vitesse améliore presque p fois si l'on compare avec la version linéaire de cet algorithme, l'algorithme \ref{mcsgdal}.
 
+\subsection{MC-SGD-Toy pour MC-SGD}
+Se basant sur SVM-Toy\cite{cl01}, nous développons une interface pour la démonstration de MC-SGD.\\
+Données :
+\begin{itemize}
+\item Chaque point est un exemple
+\item x, y sont 2 caractéristiques d'exemples
+\end{itemize}
+On applique MC-SGD pour la classification des points entrées par rapport des distances entre eux.\\
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=50mm]{images/toy}
+\caption{MC-SGD-Toy}
+\label{fig:toy}
+\end{figure}
 
+Comme nous avons présenté dans la partie de théorie, le SGD ignore \textit{b} dans le formule \ref{f5}. C'est à dire, les classificateurs de notre algorithme ne passe que l'origine des coordonnées cartésiennes. Donc, la classification dans l'espace de deux dimension comme les coordonnées cartésiennes n'est pas bien quand l'entrée comme le figure \ref{fig:toy1}.
+\begin{figure}[htbp!]
+        \centering
+        \begin{subfigure}[b]{0.4\textwidth}
+                \includegraphics[width=\textwidth]{images/toy1}
+				\caption{MC-SGD-Toy origine}
+				\label{fig:toy1}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.425\textwidth}
+                \includegraphics[width=\textwidth]{images/toy2}
+				\caption{MC-SGD-Toy non origine}
+				\label{fig:toy2}
+        \end{subfigure}
+        \caption{MC-SGD-Toy pour problème non origine}\label{fig:toyorg}
+\end{figure}
+
+Le figure \ref{fig:toy2} est le résultat de classification de MC-SGD après la modification. L'idée de cette modification est d'ajouter une troisième dimension dans chaque exemple. Un point p(x,y) devient p(x,y,1). Nous trouvons clairement sur le figure \ref{fig:toyorg} que la modification est mieux que le MC-SGD origine car c'est plus générale.

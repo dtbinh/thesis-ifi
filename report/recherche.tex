@@ -5,43 +5,48 @@
 \newtheorem{mydef}{Définition}
 \begin{mydef}
 \textbf{Caractéristique visuelle} \\
-Une caractéristique d'une image est définie comme une abstraction des informations visuelles de l'image qui sont sélectionnée pour des tâches de calcul reliées à une certaine application (par ex : classification d'images, recherche d'images).
+
+Une caractéristique d'une image est définie comme une abstraction des informations visuelles de l'image qui sont sélectionnée pour des tâches de calcul reliées à une certaine application (par exemple : classification d'images, recherche d'images).
 \end{mydef}
 
 Les caractéristiques sont extraites soit globalement sur une image entière, soit sur une petite groupe de pixel (une région) d'une image. Le résultat d'une étape d'extraction de caractéristiques (globales ou locales) est appelé \textit{descripteur de caractéristiques.}
 
 \begin{mydef}
 \textbf{Descripteur de caractéristiques} \\
+
 Nous appelons la description mathématique d'une image ou une région locale de l'image après une étape d'extraction de caractéristiques sont \textbf{descripteur de caractéristiques}
 \end{mydef}
 
 Les descripteurs se présentent normalement sous forme d'une vecteur dans un espace vectoriel, $\mathbb{R}^D$, appelé \textit{l'espace de caractéristiques}. \\
 
-Dans le cas d'une extraction globale, on récupère une seule descripteur par image tandis qu'une description locale permet d'obtenir d'un ensemble de descripteur locaux pour une image. \\
+Dans le cas d'une extraction globale, on récupère une seule descripteur par image tandis qu'une description locale permet d'obtenir d'un ensemble de descripteurs locaux pour une image. \\
 
-Jusqu'à maintenant, les cherches se basent plusieurs types de caractéristiques pour la classification ou la reconnaissance d'images. Nous pouvons lister quelques types de caractéristiques les plus couramment utilisées pour calculer des descripteur : \textit{la couleur, la texture, la forme, les points d'intérêt et les relations spatiales} qui sont décrit dans \cite{khang09}.\\
+Jusqu'à maintenant, les recherches se basent plusieurs types de caractéristiques pour la classification ou la reconnaissance d'images. Nous pouvons lister quelques types de caractéristiques les plus couramment utilisées pour calculer des descripteur tels que: \textit{la couleur, la texture, la forme, les points d'intérêt et les relations spatiales} qui sont décrit dans \cite{khang09}.\\
 
 \section{Description locale des images}
-Afin d'obtenir des descripteur locaux à partir une image, on commence par extraire des régions. La façon la plus simple est d'utiliser une \textit{partition} qui découpe l'image en rectangles ou en cercles de même taille. Une telle partition simple ne génère pas de région perceptuelle-ment significatives mais c'est une manière simple d'obtenir des caractéristiques globales de l'image avec une résolution plus fine. Dans la lecture, nous trouvons que les deux approches les plus utilisées pour localiser les région d'intérêt dans l'image : l'une fournit des régions qui se chevauchent (détection des points d'intérêt) et l'autre segmente l'image en région sans intersection (segmentation d'image)\cite{khang09}. La première approche est efficace pour la classification d'images, donc, dans cette section nous décrivons la première approche.\\[0.5cm]
+Afin d'obtenir des descripteurs locaux à partir une image, on commence par extraire des régions. La façon la plus simple est d'utiliser une \textit{partition} qui découpe l'image en rectangles ou en cercles de même taille. Une telle partition simple ne génère pas de région perceptuelle-ment significatives mais c'est une manière simple d'obtenir des caractéristiques globales de l'image avec une résolution plus fine. Dans la lecture, nous trouvons que les deux approches les plus utilisées pour localiser les régions d'intérêt dans l'image : l'une fournit des régions qui se chevauchent (détection des points d'intérêt) et l'autre segmente l'image en région sans intersection (segmentation d'image)\cite{khang09}. La première approche est efficace pour la classification d'images, donc, dans cette section nous décrivons la première approche.\\[0.5cm]
 \textbf{Détection des points d'intérêt}\\
+
 Les points d'intérêt sont traditionnellement utilisés pour la \textit{stéréo vision} mais sont utilisés aussi dans la classification d'images. Ils sont déterminés de manière telle qu'un point trouvé dans une image sera aussi trouvé dans une autre image qui diffère légèrement de la première. La signification de tels points spéciaux est due à leur représentation compacte des régions importantes de l'image qui conduit à une indexation efficace, et à leur pouvoir discriminant surtout dans la recherche d'objets.\\
 
-Un des premiers travaux sur ce sujet \cite{sm97} utilise un détecteur de Harris \cite{hs88} pour localiser des points d'intérêt invariants à la rotation. Dans \cite{dsh00}, les auteurs montrent que les descripteurs ne peuvent pas être invariants au changement d'échelle si les points d'intérêt extraits ne sont pas invariants eux même au changement d'échelle. Par conséquent, plusieurs détecteurs ont été proposé pour obtenir l'invariance au changement d'échelle des points d'intérêt \cite{lin98, low99, ms01, low04}. La sélection automatique de l'échelle est effectuer en choisissant les \textit{extrema} d'une fonction de l'échelle (par ex. laplacien normalisé, différence de gaussiennes).\\[0.5cm]
+Un des premiers travaux sur ce sujet \cite{sm97} utilise un détecteur de Harris \cite{hs88} pour localiser des points d'intérêt invariants à la rotation. Dans \cite{dsh00}, les auteurs montrent que les descripteurs ne peuvent pas être invariants au changement d'échelle si les points d'intérêt extraits ne sont pas invariants eux même au changement d'échelle. Par conséquent, plusieurs détecteurs ont été proposé pour obtenir l'invariance au changement d'échelle des points d'intérêt \cite{lin98, low99, ms01, low04}. La sélection automatique de l'échelle est effectuer en choisissant les \textit{extrema} d'une fonction de l'échelle (par exemple : laplacien normalisé, différence de gaussiennes).\\[0.5cm]
 \textbf{Caractérisation des points d'intérêt}\\
-Après avoir détecté des points d'intérêt, pour les utiliser, il faut caractériser la région autour de ces points. La caractérisation d'un point d'intérêt est calculée, à une échelle choisie, sur la région autour de ce point. Différents descripteurs ont été proposés dans la littérature : \textit{Shape context} \cite{bmp02}, \textit{Scale Invariant Feature Transform (SIFT)} \cite{low04}, \textit{PCA-SIFT} \cite{ks04}, \textit{Gradient Location and Orientation Histogram (GLOH)} \cite{ms05}. Parmi des descripteurs listés, le descripteur SIFT est le plus utilisé \cite{khang09}. Dans ce travail, nous concentrerons au descripteur SIFT, donc, nous décrivons ce descripteur et cette méthode dans la partie ci-dessous.
+
+Après avoir détecté des points d'intérêt, pour les utiliser, il faut caractériser la région autour de ces points. La caractérisation d'un point d'intérêt est calculée, à une échelle choisie, sur la région autour de ce point. Différents descripteurs ont été proposés dans la littérature : \textit{Shape context} \cite{bmp02}, \textit{Scale Invariant Feature Transform (SIFT)} \cite{low04}, \textit{PCA-SIFT} \cite{ks04}, \textit{Gradient Location and Orientation Histogram (GLOH)} \cite{ms05}. Parmi des descripteurs listés, le descripteur SIFT est le plus utilisé. Dans ce travail, nous concentrerons au descripteur SIFT, donc, nous décrivons ce descripteur et cette méthode dans la partie suivante.
 
 \section{Méthode SIFT (Scale-invariant feature transform)}
-\subsection{Introduction}
-Dans la lecture, nous trouvons qu'on traduit en français "transformation de caractéristiques visuelles invariante à l'échelle". SIFT est une méthode utilisé dans le domaine de la vision par ordinateur pour détecter et identifier les éléments similaires entre différentes images numériques (éléments de paysages, objets, personnes, etc.). Cette méthode a été développé en 1999 par le chercheur David Lowe \cite{low99}.\\
+\subsection{Description de la méthode SIFT}
+Dans la lecture, nous trouvons qu'on traduit en français "transformation de caractéristiques visuelles invariante à l'échelle". SIFT est une méthode utilisée dans le domaine de la vision par ordinateur pour détecter et identifier les éléments similaires entre différentes images numériques (éléments de paysages, objets, personnes, etc.). Cette méthode a été développé en 1999 par le chercheur David Lowe \cite{low99}.\\
 
 L'étape fondamentale de la méthode SIFT consiste à calculer les \textit{descripteurs SIFT} des images à étudier. Il s'agit d'informations numériques dérivées de l'analyse locale d'une image et qui caractérisent le contenu visuel de cette image de la façon la plus indépendante possible de l'échelle, du cadrage, de l'angle d'observation et de l'exposition (luminosité) \cite{low99}.\\
 
 La méthode proposée par Lowe comprend deux parties \cite{low04}~:
 \begin{enumerate}
-\item un algorithme de détection de caractéristiques et de calcul de descripteurs
-\item un algorithme de mise en correspondance proprement dit
+\item Un algorithme de détection de caractéristiques et de calcul de descripteurs
+\item Un algorithme de mise en correspondance proprement dit
 \end{enumerate}
-De ces deux aspects, le premier est celui qui a le plus assuré la popularité de la méthode \cite{mt10}. La deuxième permet d'utiliser le résultat de la première partie pour l'usage de la méthode. Dans notre travail, nous utilisons la méthode SIFT comme un résultat de base. C'est à dire, nous n'utilisons que la première partie de la méthode.\\
+
+Dans ces deux aspects, le premier est celui qui a le plus assuré la popularité de la méthode \cite{mt10}. La deuxième permet d'utiliser le résultat de la première partie pour l'usage de la méthode. Dans notre travail, nous utilisons la méthode SIFT comme une étape de base. C'est à dire, nous n'utilisons que la première partie de la méthode.\\
 
 La première partie, partie de détection de caractéristiques et de calculer des descripteurs comprend 4 étapes principales \cite{low99, low04}~:
 \begin{enumerate}
@@ -92,8 +97,7 @@ On peut voir l'image ci-dessous pour être facile à comprendre
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=100mm]{images/select_point}
-\caption{\cite{low04} Le maxima et le minima des images de différence de gaussienne sont détectés en comparant une
-pixel (marqué X) à ses 26 voisins dans les régions de 3x3 aux échelles actuels et adjacents (marqué avec des cercles).}
+\caption{\cite{low04} Le maxima et le minima des images de différence de gaussienne sont détectés en comparant un pixel (marqué X) à ses 26 voisins dans les régions de 3x3 aux échelles actuelles et adjacents (marqué avec des cercles).}
 \label{overflow}
 \end{figure}
 
@@ -132,7 +136,7 @@ Une fois les points-clés, associés à des facteurs d'échelles et à des orien
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=100mm]{images/siftdescriptor}
-\caption{Construction d'un descripteur SIFT}
+\caption{Construction d'un descripteur SIFT\cite{khang09}}
 \label{overflow}
 \end{figure}
 
@@ -140,13 +144,13 @@ Autour de ce point, on commence par modifier le système de coordonnées local p
 
 Ensuite, les 16 histogrammes à 8 intervalles chacun sont concaténés et normalisés. Dans le but de diminuer la sensibilité du descripteur aux changements de luminosité, les valeurs sont plafonnées à 0,2 et l'histogramme est de nouveau normalisé, pour finalement fournir le descripteur SIFT du point-clé, de dimension 128.
 
-\section{Méthode BoW (Bag of word)}
-La représentation par sac de mots \textit{(ou bag of words en anglais)} est une description de document (texte, image, ...) très utilisée en recherche d'information. Spécialement, dans la classification d'images, cette méthode est largement utilisée après l'étape d'extraction des descripteurs. Dans DoW, les méthodes de cluster sont utilisées pour grouper des  descripteurs. Actuellement, la méthode K-moyenne (Kmeans)\cite{jm67} est beaucoup utilisée pour grouper des des descripteurs SIFT aux clusters, chaque cluster est considère comme un mot visuel, l'ensemble de mots visuels jouent le rôle d'un dictionnaire de mots visuels. Ensuite, BoW met chaque descripteur de chaque image au cluster qui est le plus proche( se base sur la distance entre chaque descripteur et sa future cluster ). Suite, chaque image est décrite comme un histogramme des mots. Cette méthode est décrite comme l'image ci-dessous.
+\section{Modèle BoVW (Bag of visual word)}
+La représentation par le sac de mots visuels \textit{(ou bag of visual words en anglais)} est une description de document (texte, image, ...) très utilisée en recherche d'information. Spécialement, dans la classification d'images, ce modèle est largement utilisé après l'étape d'extraction des descripteurs. Dans BovW, les méthodes de cluster sont utilisées pour grouper des  descripteurs. Actuellement, la méthode K-moyenne (K-means)\cite{jm67} est beaucoup utilisée pour grouper des des descripteurs SIFT aux clusters, chaque cluster est considéré comme un mot visuel, l'ensemble de mots visuels jouent le rôle d'un dictionnaire de mots visuels. Ensuite, BovW met chaque descripteur de chaque image au cluster qui est le plus proche( se base sur la distance entre chaque descripteur et sa future cluster ). Suite, chaque image est décrite comme un histogramme des mots. Ce modèle est décrite comme l'image ci-dessous.
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=160mm]{images/bow}
-\caption{Model de BOW}
+\caption{Model de BOW \cite{nk13}}
 \label{overflow}
 \end{figure}
 
@@ -154,7 +158,9 @@ La représentation par sac de mots \textit{(ou bag of words en anglais)} est une
 \label{chap:sgd}
 
 \section{Introduction}
-L'apprentissage automatique (machine learning) est un domaine de l'intelligence artificielle, qui permet aux machines d'apprendre à partir des données. L'apprentissage automatique est la discipline scientifique concernée par le développement, l'analyse et l'implémentation de méthodes automatisables qui permettent à une machine d'évoluer autonome-ment grâce à un processus d'apprentissage, et ainsi de remplir des tâches qu'il est difficile ou impossible de remplir par des moyens algorithmiques plus classiques. Le problème ici est que la donnée d'observation est petite, elle ne peut pas comprendre tout l'ensemble de données d'entrées (tous les cas) qui est trop grande. Un programme d'apprentissage automatique doit généraliser des données limite afin de données des réactions intelligentes sur des nouveaux exemples.\\
+L'apprentissage automatique (machine learning) est un domaine de l'intelligence artificielle, qui permet aux machines d'apprendre à partir des données. L'apprentissage automatique est la discipline scientifique concernée par le développement, l'analyse et l'implémentation de méthodes automatisables qui permettent à une machine d'évoluer autonome-ment grâce à un processus d'apprentissage, et ainsi de remplir des tâches qu'il est difficile ou impossible de remplir par des moyens algorithmiques plus classiques. Le problème ici est que la donnée d'observation est petite, elle ne peut pas comprendre tout l'ensemble de données d'entrées (tous les cas) qui est trop grande. Un programme d'apprentissage automatique doit généraliser des données limite afin de donner des réactions intelligentes sur des nouveaux exemples.\\
+
+Dans la classification d'images, les images d'apprentissage ne peut pas se compose tous les cas de chaque image, donc, les algorithmes classiques ne permettent pas de reconnaitre des images. C'est la raison pour laquelle on a besoin des méthodes intelligentes comme l'apprentissage automatique pour prédire des nouvelles images entrées. Après avoir appliqué SIFT et BoVW, les images deviennent des chiffres. L'apprentissage automatique utilise ces chiffres pour la classification.
 
 \section{Méthode SVM (Support Vector Machine)}
 Les machines à vecteurs de support (Support Vector Machine, SVM) sont un ensemble de techniques d'apprentissage supervisé destinées à résoudre des problèmes de classification et de régression. Dans cette section, nous ne parlons que SVM pour la classification concernant notre projet dans la pratique.\\
@@ -168,16 +174,17 @@ Supposons que l'on a le problème de classification. Le cas simple est le cas d'
 \label{slines}
 \end{figure}
 
-SVM cherche l'hyperplan optimal qui est défini comme l'hyperplan qui maximise la marge entre les échantillons et l'hyperplan séparateur. La marge est la distance entre l'hyperplan et les échantillons les plus proches. Ces derniers sont appelés \textit{vecteurs supports}. Dans l'espace de \textit{N} dimensions, l'hyperplan est défini par le vecteur $w=[w_1,w_2,...,w_n]$ et $b$. SVM cherche l'hyperplan $(w, b)$ pour classifier les données comme l'image \ref{max_margin} :
+SVM cherche l'hyperplan optimal qui est défini comme l'hyperplan qui maximise la marge entre les échantillons et l'hyperplan séparateur. La marge est la distance entre l'hyperplan et les échantillons les plus proches. Ces derniers sont appelés \textit{vecteurs de supports}. Dans l'espace de \textit{N} dimensions, l'hyperplan est défini par le vecteur $w=[w_1,w_2,...,w_n]$ et $b$. SVM cherche l'hyperplan $(w, b)$ pour classifier les données comme l'image \ref{max_margin}. Il existe des raisons théoriques à ce choix. Vapnik a montré que la capacité des classes d'hyperplans séparateurs diminue lorsque leur marge augmente\cite{vv82}.
 
-\begin{figure}[ht!]
+\begin{figure}[H]
 \centering
 \includegraphics[width=55mm]{images/margin}
 \caption{L'hyperplan optimal}
 \label{max_margin}
 \end{figure}
 
-Après avoir trouvé $w$ et $b$, l'hyperplan optimal est défini : $x^T.w - b = 0$ et 2 supports hyperplans $x^T.w - b = 1$ et $x^T.w - b = -1$. Par rapport à 2 supports hyperplans parallèles (voir l'image \ref{max_margin}), la classification est réalisée grâce aux \ref{f1} et \ref{f2}.
+Pour trouver l'hyperplan optimal, tout d'abord on  construit 2 supports hyperplans $x^T.w - b = 1$ et $x^T.w - b = -1$. L'hyperplan optimal est trouvé au milieux de ces deux hyperplans.
+Après avoir trouvé $w$ et $b$, l'hyperplan optimal est défini : $x^T.w - b = 0$ et  Par rapport à 2 supports hyperplans parallèles (voir l'image \ref{max_margin}), la classification est réalisée grâce aux \ref{f1} et \ref{f2}.
 \begin{equation}
 x_i.w - b \geq +1, \Rightarrow y_i = 1
 \label{f1}
@@ -188,21 +195,21 @@ x_i.w - b \leq -1, \Rightarrow y_i = -1
 \label{f2}
 \end{equation}
 
-La classification peut être expliqué : l'hyperplan supporte la classe \textit{\textbf{(+1)}} est l'hyperplan que les points qui a le label \textit{\textbf{(+1)}} au dessus de l'hyperplan. Comme ça, l'hyperplan supporte la classe \textit{\textbf{(-1)}} est l'hyperplan que les points qui a le label \textit{\textbf{(-1)}} au dessous de l'hyperplan. Par rapport aux \ref{f1} et \ref{f2}, on a le formule \ref{f3}
+La classification peut être expliquée : l'hyperplan supporte la classe \textit{\textbf{(+1)}} est l'hyperplan que les points qui a le label \textit{\textbf{(+1)}} au dessus de l'hyperplan. Comme ça, l'hyperplan supporte la classe \textit{\textbf{(-1)}} est l'hyperplan que les points qui a le label \textit{\textbf{(-1)}} au dessous de l'hyperplan. Par rapport aux \ref{f1} et \ref{f2}, on a le formule \ref{f3}
 
 \begin{equation}
 y_i.(x_i.w - b) \geq 1
 \label{f3}
 \end{equation}
 
-Dans le cas où l'algorithme ne peut pas trouver $(w, b)$ satisfait le problème (les données sont inséparable), nous devons accepter des erreurs $z_i$. Chaque exemple $i$ est dans son vrais hyperplan, son erreur $z_i = 0$, sinon, son erreur $z_i$ est défini par la distance entre cet exemple et son hyperplan. Le formule \ref{f3} devient \ref{f4} :
+Dans le cas où l'algorithme ne peut pas trouver $(w, b)$ satisfait le problème (les données sont inséparable), nous devons accepter des erreurs $z_i$. Chaque exemple $i$ est dans son vrais hyperplan, donc, son erreur $z_i = 0$, sinon, son erreur $z_i$ est défini par la distance entre cet exemple et son hyperplan. Le formule \ref{f3} devient \ref{f4} :
 
 \begin{equation}
 y_i.(x_i.w - b) + z_i \geq 1
 \label{f4}
 \end{equation}
 
-Nous trouvons que la classification est facile si l'on a trouvé $w$ et $b$. La difficulté de la méthode SVM est que comment trouver $w$ et $b$. Ce tache est réalisé après avoir trouvé la solution du programme de quadratique \ref{f5}.
+Nous trouvons que la classification est facile si l'on a trouvé $w$ et $b$. La difficulté de la méthode SVM est que comment trouver $w$ et $b$. Cette tâche est réalisée après avoir trouvé la solution du programme de quadratique \ref{f5}.
 
 \begin{equation}
 \begin{split}
@@ -211,10 +218,25 @@ Nous trouvons que la classification est facile si l'on a trouvé $w$ et $b$. La 
 \label{f5}
 \end{equation}
 
-Le problème d'optimisation quadratique \ref{f5} est un des problèmes d'optimisation qui est normalement recherché dans le domaine de mathématique d'optimisation. Pour l'implémentation ce problème, \cite{jp98} et \cite{cl01} ont la complexité de $O(N^2)$ (N est le nombre d'exemples). Ce sont des programmes les plus utilisés actuel.
+Le problème d'optimisation quadratique \ref{f5} est un des problèmes d'optimisation qui est normalement recherché dans le domaine de mathématique d'optimisation. Pour l'implémentation ce problème, \cite{jp98} et \cite{cl01} ont la complexité de $O(N^2)$\cite{nk13} (N est le nombre d'exemples). Ce sont des programmes les plus utilisés actuel.
 
 \section{Méthode SVM avec SGD (Stochastic gradient descent)}
-SVM standard est efficace mais la complicité est grande $(O(N^2))$, donc, c'est intraitable pour les larges données. La méthode SVM avec SGD (Stochastic Gradient Descent), ou pour plus simple, on appelle la méthode SGD est créées pour résoudre ce problème. SGD ne cherche pas la solution pour résoudre le problème du programme de quadratique \ref{f5}. Cette méthode ignore $b$  dans le formule \ref{f5}. Le contraint $y_i.(x_i.w - b) + z_i \geq 1$ peut être remplacé par : 
+\subsection{Descente de gradient}
+Le SVM standard est efficace mais la complicité est grande $(O(N^2))$, donc, c'est intraitable pour les larges données. La méthode SVM avec la descente de gradient est créées pour résoudre ce problème. Au lieu de chercher la solution pour résoudre le problème du programme de quadratique \ref{f5} comme la méthode SVM, cette méthode utilise la descente de gradient pour trouver w et b qui minimise $\Psi$.
+
+Pour un programme quadratique $f(x)$, la descente de gradient peut être décrite comme l'image ci-dessous :
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=85mm]{images/desgrad}
+\caption{Descente de gradient}
+\label{descent_gradient}
+\end{figure}
+
+L'algorithme du gradient désigne un algorithme d'optimisation différentiable. Il est par conséquent destiné à minimiser une fonction réelle différentiable définie sur un espace euclidien (par exemple, $R^n$, l'espace des n-dimensions de nombres réels, muni d'un produit scalaire) ou, plus généralement, sur un espace hilbertien (de dimension infinie). L'algorithme est itératif et procède donc par améliorations successives. Au point courant, un déplacement est effectué dans la direction opposée au gradient, de manière à faire décroître la fonction. Le déplacement le long de cette direction est déterminé par la technique numérique connue sous le nom de recherche linéaire. Pour la méthode descente de gradient, on utilise tous les pairs (x, y) pour calculer le sous-gradient. La méthode descente de gradient stochastique utilise moins exemples chaque itération pour calculer le sous-gradient.
+
+\subsection{Descente de gradient stochastique (SGD)}
+Dans la méthode SGD, au lieu d'utiliser tous les pairs (x, y) pour calculer le sous-gradient, on peut utiliser un ou quelques exemples aléatoires. Dans Pegasos, les auteurs ignore $b$  dans le formule \ref{f5}. Le contraint $y_i.(x_i.w - b) + z_i \geq 1$ peut être remplacé par :
 
 \begin{equation}
 z_i \geq 1 - y_i.(x_i.w)
@@ -228,33 +250,61 @@ z_i = max\lbrace0, 1 - y_i.(x_i.w)\rbrace
 \label{f7}
 \end{equation}
 
-Donc, le programme de quadratique \ref{f5} peut remplacer par le formule \ref{f7} :
+Donc, le programme de quadratique \ref{f5} peut remplacer par le formule \ref{f8} :
 
 \begin{equation}
-\mbox{min}\quad \Psi(w, x, y) = \frac{1}{2} ||w||^2 + \frac{1}{m}\sum\limits_{i=1}^m max\lbrace0, 1 - y_i.(x_i.w)\rbrace\quad
-\label{f7}
-\end{equation}
-
-Cette méthode est proposée dans \cite{sss07}. Dans cette méthode, $w$ est mise à jour en T étapes avec une vitesse d'apprentissage $\eta$. A chaque étape $t$, SGD utilise un exemple $(x_i, y_i)$ aléatoire pour calculer le sous-gradient et met à jour $w_{t+1}$. 
-
-\begin{equation}
-w_{t+1} = w_t - \nabla_w{\Psi(w_t, x_i, y_i)}
+\mbox{min}\quad \Psi(w, x, y) = \frac{1}{2} ||w||^2 + \sum\limits_{i=1}^m max\lbrace0, 1 - y_i.(x_i.w)\rbrace\quad
 \label{f8}
 \end{equation}
-\\
 
-Cette algorithme est linéaire avec le nombre d'exemple. C'est la raison pour laquelle il est beaucoup plus vite que SVM standard. 
+L'implémentation Pegasos de la méthode SGD est proposée dans \cite{sss07} prend un seul exemple pour la mise à jour de w. Donc, dans chaque étape t, on a $\Psi(w, i_t)$ comme le formule \ref{f9}
+\begin{equation}
+\mbox{min}\quad \Psi(w, i_t) = \frac{1}{2} ||w||^2 + max\lbrace0, 1 - y_i.(x_i.w)\rbrace
+\label{f9}
+\end{equation}
+
+Dans cette méthode, $w$ est mise à jour en T étapes avec une vitesse d'apprentissage $\eta_t$. A chaque étape $t$, SGD prend un exemple $(x_i, y_i)$ aléatoire pour calculer le sous-gradient et met à jour $w_{t+1}$.
+
+\begin{equation}
+w_{t+1} = w_t - \eta_t.\nabla_w{\Psi(w, i_t)}
+\label{f10}
+\end{equation}
+
+Où 
+\[
+\nabla_w{\Psi(w, i_t)} = \lambda.w_t  - \Bbbk[y_i.(w_t,x_{it}) < 1].y_{it}.x_{it}
+\]
+et
+\[
+\eta_t = \frac{1}{\lambda.t}
+\]
+
+$\Bbbk[y_i.(w_t,x_{it}) < 1]$ prend le value $1$ si $y_i.(w_t,x_{it}) < 1$ et il prend le value $0$ si inverse
+
+Donc, le formule \ref{f10} devient
+\begin{equation}
+w_{t+1} = (1 - \frac{1}{t})w_t + \frac{1}{\lambda.t} \Bbbk[y_i.(w_t,x_{it}) < 1].y_{it}.x_{it}
+\label{f11}
+\end{equation}
+
+\subsection{Mini-batch interaction}
+Pour plus générale, dans Pegasos, les auteurs ne choisissent pas un seul exemple, mais ils choisissent k exemples dans chaque étape t. Pour cette modification, w est mise à jour comme dans le formule \ref{f12}
+\begin{equation}
+w_{t+1} = (1 - \frac{1}{t})w_t + \frac{1}{\lambda.t.k}\sum\limits_{i=1}^k \Bbbk[y_i.(w_t,x_{it}) < 1].y_{it}.x_{it}
+\label{f12}
+\end{equation}
+
 
 %Nous avons tester avec les données \textit{gisette} \cite{svmdata1} de 10 classes, 60.000 exemples et de 780 caractéristiques par exemple. 
 
 \section{Méthode MC-SGD (Multi Class - Stochastic gradient descent)}
-Plupart d'algorithme de SVM ne traite que le problème de 2 classes (binaire). Il existe plusieurs extensions d'une classification binaire afin de traiter le problème de multi-class classification. Actuellement, on a deux façons pour traiter ce problème. L'une considère directement à résoudre le problème de multi-classes \cite{ww99, yg07}. L'autre divise d'abord le problème en plusieurs problèmes de 2 classes et chaque problème de 2 classes est traité par la classification binaire comme one-versus-one \cite{vv95} et one-versus-all \cite{uk99}. En pratique, one-vs-one et one-vs-all sont beaucoup utilisés par leur simple.\\
+Plupart d'algorithme de SVM ne traite que le problème de 2 classes (binaire). Il existe plusieurs extensions d'une classification binaire afin de traiter le problème de multi-class classification. Actuellement, on a deux façons pour traiter ce problème. L'une considère directement à résoudre le problème de multi-classes \cite{ww99}. L'autre divise d'abord le problème en plusieurs problèmes de 2 classes et chaque problème de 2 classes est traité par la classification binaire comme one-versus-one \cite{vv95} et one-versus-all \cite{uk99}. En pratique, one-vs-one et one-vs-all sont beaucoup utilisés par leur simple.\\
 
 \subsection{One-versus-one}
 One-vs-one construit \textit{k(k-1)/2} (k est le nombre de classes) classificateurs, c'est à dire, il utilise tous les paires de classes différents pour l'apprentissage. La prédiction est réalisée par voter et la majorité classificateur va être choisi et la classe correspondant est la classe de prédiction. 
 
 
-\begin{figure}[htbp!]
+\begin{figure}[H]
         \centering
         \begin{subfigure}[b]{0.5\textwidth}
                 \includegraphics[width=\textwidth]{images/multiclass}
@@ -265,7 +315,7 @@ One-vs-one construit \textit{k(k-1)/2} (k est le nombre de classes) classificate
           %(or a blank line to force the subfigure onto a new line)
         \begin{subfigure}[b]{0.5\textwidth}
                 \includegraphics[width=\textwidth]{images/1vs1c}
-                \caption{one-vs-all}
+                \caption{one-vs-one}
                 \label{1vs1c}
         \end{subfigure}
         \caption{Problème de multi-classes one-versus-one}\label{mulclass}
@@ -274,7 +324,7 @@ One-vs-one construit \textit{k(k-1)/2} (k est le nombre de classes) classificate
 
 L'image \ref{1vs1c} est comme un résumé de one-vs-one. Pour plus claire, nous vous listons les trois classificateurs de ces trois classes comme l'image \ref{1vs1detail}
 
-\begin{figure}[htbp!]
+\begin{figure}[H]
         \centering
         \begin{subfigure}[b]{0.3\textwidth}
                 \includegraphics[width=\textwidth]{images/classac}
@@ -312,7 +362,7 @@ One-vs-all construit \textit{k} classificateurs, à chaque classificateur \texti
         ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
           %(or a blank line to force the subfigure onto a new line)
         \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{images/1vsall}
+                \includegraphics[width=\textwidth]{images/1vsallc}
                 \caption{one-vs-all}
                 \label{1vsall}
         \end{subfigure}
@@ -346,5 +396,4 @@ L'image \ref{1vsall} est comme un résumé de one-vs-all. Pour plus claire, nous
         \caption{Problème de multi-classes one-versus-all détaillé}\label{1vsalldetail}
 \end{figure}
 
-
-Chaque méthode a l'avantage et l'inconvénient. One-vs-one est balancé mais il construit beaucoup de classificateurs. Par contre, one-vs-all construit moins classificateur mais il n'est pas balancé.
+Ces deux méthodes souffrent toutes de deux défauts. La version One-vs-one construit beaucoup de classificateurs. Dans la version one-versus-all, rien n'indique que les valeurs du résultat de classification des $k$ classificateurs soient comparables. De plus le problème n'est plus équilibré, par exemple avec k = 10, on utilise seulement 10\% d'exemples positifs pour 90\% d'exemples négatifs.
