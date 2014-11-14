@@ -19,7 +19,6 @@
 % Empty space after chapter/section/subsection titles can be used to insert text.
 %
 % Just compile this file using pdflatex after making all required changes.
-
 \documentclass[12pt,a4paper]{report}
 
 % For algorithm
@@ -34,10 +33,19 @@
 \usepackage{verbatim}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{afterpage}
+\usepackage{indentfirst}
+\let\oldlistofalgorithms\listofalgorithms
+\renewcommand{\listofalgorithms}{%
+  \begingroup%
+  \let\oldnumberline\numberline%
+  \renewcommand{\numberline}{Algorithm~\oldnumberline}%
+  \oldlistofalgorithms%
+  \endgroup}
 
 \usepackage[pdftex]{graphicx} %for embedding images
 \usepackage{url} %for proper url entries
-\usepackage[bookmarks, colorlinks=false, pdfborder={0 0 0}, pdftitle={<pdf title here>}, pdfauthor={<author's name here>}, pdfsubject={<subject here>}, pdfkeywords={<keywords here>}]{hyperref} %for creating links in the pdf version and other additional pdf attributes, no effect on the printed document
+\usepackage[bookmarks, colorlinks=false, pdfborder={0 0 0}, pdftitle={Sgd pour la classification d'image}, pdfauthor={Quoc-Khai NGUYEN}, pdfsubject={Sgd pour la classification d'image}, pdfkeywords={sgd}]{hyperref} %for creating links in the pdf version and other additional pdf attributes, no effect on the printed document
 %\usepackage[final]{pdfpages} %for embedding another pdf, remove if not required
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -57,27 +65,53 @@
 
 \begin{otherlanguage}{french}
 
-\renewcommand\bibname{References} %Renames "Bibliography" to "References" on ref page
+%\renewcommand\bibname{References}
 
 %include other pages
 \input{./title.tex}
 \input{./certificate.tex}
-
-\pagenumbering{roman} %numbering before main content starts
-\tableofcontents
-\listoffigures
-
-\newpage
-\pagenumbering{arabic} %reset numbering to normal for the main content
 \input{./remerciement}
+\pagenumbering{arabic} %reset numbering to normal for the main content
+
+\cleardoublepage  % \clearpage (if using single side)
+\phantomsection
+\addcontentsline{toc}{chapter}{Table des matières} \raggedbottom \pagebreak \thispagestyle{empty}
+\tableofcontents
+
+
 \input{./abstract.tex}
+
+\cleardoublepage
+\phantomsection
 \input{./introduction.tex} %literature survey included in this
 \input{./recherche.tex}
 \input{./implementation.tex}
 \input{./experiment.tex}
-%\input{./resultat.tex}
+
+\cleardoublepage
+\phantomsection
 \input{./conclusion.tex}
+
+\cleardoublepage
+\phantomsection
 \input{./ref.tex}
+
+\cleardoublepage  % \clearpage (if using single side)
+\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename} \raggedbottom \pagebreak \thispagestyle{empty}
+\listoffigures
+
+\cleardoublepage  % \clearpage (if using single side)
+\phantomsection
+\addcontentsline{toc}{chapter}{\listtablename} \raggedbottom \pagebreak \thispagestyle{empty}
+\listoftables
+
+\cleardoublepage  % \clearpage (if using single side)
+\phantomsection
+\renewcommand{\listalgorithmname}{Liste des algorithmes}
+\addcontentsline{toc}{chapter}{\listalgorithmname} \raggedbottom \pagebreak \thispagestyle{empty}
+\listofalgorithms
+\addtocontents{loa}{\def\string\figurename{Algorithm}}
 
 \end{otherlanguage}
 

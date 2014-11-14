@@ -1,7 +1,24 @@
-\clearpage
-\thispagestyle{plain}
+\cleardoublepage  % \clearpage (if using single side)
+\phantomsection
+\addcontentsline{toc}{chapter}{Résumé}
 \chapter*{Résumé}
+La classification d'images consiste à étiqueter automatiquement des images en catégories prédéfinies. Son application se compose plusieurs domaines importants.\\
 
-Dans ce projet, nous avons étudié les problèmes concernant la classification d'images et développé un algorithme parallèle multi-classes basé sur la descente de gradient stochastique. Dans un premier temps, nous avons étudié la représentation des images par descripteurs locaux SIFT (Scalable Invariant Feature Transform) \cite{low99}. D'abord, on extrait des SIFT à partir des images. À la fin de cette étape, nous obtenons un ensemble des vecteurs caractéristiques pour chaque image. L'étape suivante consiste à construire un vocabulaire visuel en appliquant un algorithme de clustering (e.g. k-means) sur un ensemble des vecteurs caractéristiques. Un cluster correspond à un mot visuel. Enfin, une image se représente par un histogramme des mots visuels. Cette approche s'inspire au modèle sac-de-mots largement utilisé dans l'analyse des données textuelles. Dans un second temps, nous nous concentrons sur le problème d'apprentissage automatique basé sur la descente de gradient stochastique \cite{sss07}. Pour améliorer la vitesse de l'algorithme sur des machines de multi-cœurs, nous avons aussi parallélisé cet algorithme en utilisant la libraire OpenMP. Pour balancer la base d'apprentissage, nous avons développé une version balancée de SGD pour adapter à la classification multi-classes.
+Ce projet consiste à étudier les problèmes concernant la classification d'images et à développer un algorithme parallèle multi-classes basé sur la descente de gradient stochastique. Dans un premier temps,  on extrait des données visuelles dans des images. Nous avons d'abord étudié la représentation des images par des vecteurs caractéristiques (SIFT)\cite{low99}. L'étape suivante consiste à construire un vocabulaire visuel en appliquant l'algorithme de clustering, k-moyenne sur un ensemble de vecteurs caractéristiques. Un cluster correspond à un mot visuel. Enfin, une image s'est représentée par un histogramme des mots visuels. Cette approche s'inspire au modèle sac-de-mots largement utilisé dans l'analyse des données textuelles. Dans un second temps, nous nous concentrons sur le problème d'apprentissage automatique basé sur la descente de gradient stochastique. Se basant sur l'implémentation SGD binaire Pegasos dans \cite{sss07}, nous avons développé l'algorithme MC-SGD pour la classification multi-classes. Afin d'améliorer la vitesse de l'algorithme sur des machines multi-cœurs, nous avons aussi parallélisé cet algorithme en utilisant l'OpenMP.\\
 
+Nous constatons que les résultats de notre algorithme sont similaires à ceux de la LibSVM. De plus, notre algorithme est beaucoup plus rapide que la LibSVM, surtout pour les données complexes. Donc, notre méthode s'adapte bien pour la classification d'images où les données sont grandes.
 
+\end{otherlanguage}
+
+\cleardoublepage  % \clearpage (if using single side)
+\phantomsection
+\addcontentsline{toc}{chapter}{Abstract} \raggedbottom \pagebreak \thispagestyle{empty}
+\chapter*{Abstract}
+Image classification is to automatically tag images in predefined categories. Its application is made several important domains.\\
+
+This project is to study the problems that concerns the image classification and to develop a parallel multi-class algorithm based on the stochastic gradient descent. Initially, visual data is extracted from images. We first studied the representation of images by feature vectors (SIFT) \cite{low99}. The next step is to construct a visual vocabulary by applying of the clustering algorithm, k-mean on the set of feature vectors. A cluster corresponds to a visual word. Finally, an image is represented by a histogram of visual words. This approach is based on model bag of visual words widely used in the analysis of textual data. In a second step, we focus on the machine learning problem based on the stochastic gradient descent. Based on the implementation binary SGD in Pegasos \cite{sss07}, we have developed the MC-SGD algorithm for multi-class classification. To improve the speed of the algorithm on multi-core machine, we also parallelize the algorithm using OpenMP.\\
+
+We note the results of our algorithm are similar to those of LibSVM. In addition, our algorithm is much faster than LibSVM, especially for complex data. So our method is well suited for image classification where the data are large.
+
+\begin{otherlanguage}{french}
+%\afterpage{\null}
